@@ -1,11 +1,13 @@
 using InterGalacticEcomm.Data;
 using InterGalacticEcomm.Models;
+using InterGalacticEcomm.Models.Interface;
 using InterGalacticEcomm.Models.Interface.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,18 +44,15 @@ namespace InterGalacticEcomm
 
             services.AddScoped<JwtTokenService>();
 
-            services.AddAuthentication(options =>
+            services.AddAuthentication();
+
+            services.AddAuthorization(options =>
             {
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));   // make other cruds
             });
-                //.AddJwtBearer(options =>
-                //{
-                    //options.TokenValidationParameters = JwtTokenService.GetValidationParams(configuration);
-                //});
 
-
+            services.AddTransient<IUserService, IdentityUserService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +64,9 @@ namespace InterGalacticEcomm
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
