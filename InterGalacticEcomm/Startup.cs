@@ -33,9 +33,6 @@ namespace InterGalacticEcomm
                 options.UseSqlServer(connectionString);
             });
 
-            services.AddMvc();
-            services.AddControllers();
-
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = false;
@@ -52,7 +49,9 @@ namespace InterGalacticEcomm
             });
 
             services.AddTransient<IUserService, IdentityUserService>();
-            
+
+            services.AddMvc();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

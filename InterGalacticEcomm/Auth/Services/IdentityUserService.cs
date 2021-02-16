@@ -10,11 +10,11 @@ namespace InterGalacticEcomm.Models.Interface.Services
 {
     public class IdentityUserService : IUserService
     {
-        private readonly UserManager<AppUserDTO> userManager;
+        private readonly UserManager<AppUserDTO> UserManager;
 
         public IdentityUserService(UserManager<AppUserDTO> registerUser)
         {
-            userManager = registerUser;
+            UserManager = registerUser;
         }
 
         public async Task<AppUserDTO> Register(RegisterUser data, ModelStateDictionary modelState)
@@ -24,12 +24,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 UserName = data.UserName,
                 Password = data.Password
             };
-            var result = await userManager.CreateAsync(user, data.Password);
+            var result = await UserManager.CreateAsync(user, data.Password);
 
             if (result.Succeeded)
             {
                 //beacuse they are a user, add their role
-                await userManager.AddToRolesAsync(user, data.Roles);
+                await UserManager.AddToRolesAsync(user, data.Roles);
 
                 return new AppUserDTO
                 {
@@ -42,21 +42,21 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
         public async Task<AppUserDTO> Authenticate(string userName, string password)
         {
-            var user = await userManager.FindByNameAsync(userName);
+            var user = await UserManager.FindByNameAsync(userName);
 
-            if (await userManager.CheckPasswordAsync(user, password))
+            if (await UserManager.CheckPasswordAsync(user, password))
             {
 
                 return new AppUserDTO
                 {
                     UserName = user.UserName,
                     Password = user.Password,
-                    Roles = user.Roles
+                    Roles = "Guest"
                 };
             }
 
             return null;
         }
-        //TODO: add authenticate method
+        
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace InterGalacticEcomm.Models.Interface
 {
-    public class ICategory
+    public interface ICategory
     {
     }
 }
