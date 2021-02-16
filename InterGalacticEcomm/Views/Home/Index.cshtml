@@ -1,0 +1,15 @@
+﻿@model IEnumerable<InterGalacticEcomm.Models.Category>
+
+<h1>Here is the Home/Index page</h1>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <a asp-controller="Home" asp-action="Category" asp-route-CategoryName="@item.CategoryName" asp-route-Description="@item.Description">@item.CategoryName</a>
+        </li>
+    }
+
+
+</ul>
+
