@@ -18,27 +18,41 @@ namespace InterGalacticEcomm.Controllers
             UserService = service;
         }
 
-        //login screen
+        /// <summary>
+        /// Home page, currently our login screen.  Calls /authenticate
+        /// </summary>
+        /// <returns> Index View() </returns>
         [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
-        //register screen
+        /// <summary>
+        /// New user registration page.  Uses a form that calls /register
+        /// </summary>
+        /// <returns> Signup View() </returns>
         [AllowAnonymous]
         public IActionResult Signup()
         {
             return View();
         }
 
-        //error screen
+        /// <summary>
+        /// Error screen to redirect to if things go wrong
+        /// </summary>
+        /// <returns> Error View() </returns>
         [AllowAnonymous]
         public IActionResult Error()
         {
             return View();
         }
 
+        /// <summary>
+        /// Authentication route for the login screen
+        /// </summary>
+        /// <param name="data"> LoginData object with username and password from form </param>
+        /// <returns> Redirect to appropriate page </returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult<AppUserDTO>> Authenticate(LoginData data)
@@ -49,6 +63,11 @@ namespace InterGalacticEcomm.Controllers
             return Redirect("/login/welcome");
         }
 
+        /// <summary>
+        /// Route used by /Signup to register a new user 
+        /// </summary>
+        /// <param name="data"> RegisterUser object with form input </param>
+        /// <returns> Redirect() </returns>
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult<AppUserDTO>> Register(RegisterUser data)
@@ -64,12 +83,20 @@ namespace InterGalacticEcomm.Controllers
             throw new Exception("womp womp"); // temp return for linter
         }
 
+        /// <summary>
+        /// Currently a generic welcome redirect page after a successful login
+        /// </summary>
+        /// <returns> Welcome View() </returns>
         [Authorize]
         public IActionResult Welcome()
         {
             return View();
         }
 
+        /// <summary>
+        /// Holder page for user profiles, currently only accessable by admins
+        /// </summary>
+        /// <returns> Profile View() </returns>
         [Authorize]
         [Authorize(Roles="Admin")]
         //[Authorize(Policy="read")]

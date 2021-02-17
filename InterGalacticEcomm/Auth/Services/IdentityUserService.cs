@@ -20,6 +20,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
             signInManager = sim;
         }
 
+        /// <summary>
+        /// Method to register a new user and assign them a role of "Guest".
+        /// </summary>
+        /// <param name="data"> RegisterUser object with input from form via the controller </param>
+        /// <param name="modelState"> ModelStateDictionary object, magic </param>
+        /// <returns> new AppUserDTO object </returns>
         public async Task<AppUserDTO> Register(RegisterUser data, ModelStateDictionary modelState)
         {
             var user = new AppUser()
@@ -31,7 +37,6 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
             if (result.Succeeded)
             {
-                //beacuse they are a user, add their role
                 await UserManager.AddToRolesAsync(user, data.Roles);
 
                 return new AppUserDTO
@@ -43,6 +48,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
             return new AppUserDTO();
         }
 
+        /// <summary>
+        /// Method used by login to authenticate users.  
+        /// </summary>
+        /// <param name="userName"> username from form input via the controller </param>
+        /// <param name="password"> password from form input via the controller </param>
+        /// <returns> AppUserDTO object </returns>
         public async Task<AppUserDTO> Authenticate(string userName, string password)
         {
             var result = await signInManager.PasswordSignInAsync(userName, password, true, false);
@@ -60,6 +71,11 @@ namespace InterGalacticEcomm.Models.Interface.Services
             throw new Exception("womp womp");
         }
 
+        /// <summary>
+        /// Not really sure yet
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <returns></returns>
         public async Task<AppUserDTO> GetUser(ClaimsPrincipal principal)
         {
             var user = await UserManager.GetUserAsync(principal);
