@@ -10,19 +10,19 @@ namespace InterGalacticEcomm.Models.Interface.Services
 {
     public class IdentityUserService : IUserService
     {
-        private readonly UserManager<AppUserDTO> UserManager;
+        private readonly UserManager<AppUser> UserManager;
 
-        public IdentityUserService(UserManager<AppUserDTO> registerUser)
+        public IdentityUserService(UserManager<AppUser> registerUser)
         {
             UserManager = registerUser;
         }
 
         public async Task<AppUserDTO> Register(RegisterUser data, ModelStateDictionary modelState)
         {
-            var user = new AppUserDTO()
+            var user = new AppUser()
             {
                 UserName = data.UserName,
-                Password = data.Password
+                Email = data.Email
             };
             var result = await UserManager.CreateAsync(user, data.Password);
 
@@ -33,8 +33,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
                 return new AppUserDTO
                 {
-                    UserName = user.UserName
-
+                    UserName = user.UserName,
+                    Roles = new List<string>() { "Guest" }
                 };
             }
             return new AppUserDTO();
@@ -50,12 +50,11 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 return new AppUserDTO
                 {
                     UserName = user.UserName,
-                    Password = user.Password,
-                    Roles = "Guest"
+                    Id = user.Id
                 };
             }
 
-            return null;
+            throw new Exception("womp womp");
         }
         
     }

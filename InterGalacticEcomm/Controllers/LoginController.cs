@@ -41,7 +41,7 @@ namespace InterGalacticEcomm.Controllers
             var user = await UserService.Authenticate(data.UserName, data.Password);
             if (user == null)
                 return Redirect("/login");
-            return Redirect("/welcome");
+            return Redirect("/login/welcome");
         }
 
         [HttpPost]
@@ -50,7 +50,7 @@ namespace InterGalacticEcomm.Controllers
             data.Roles = new List<string>() { "Guest" };
 
             var user = await UserService.Register(data, this.ModelState);
-            if (ModelState.IsValid)
+            if (user != null)
                 return Redirect("/login/welcome");
 
             // not enough to catch errors, do a try catch with a redirect

@@ -4,14 +4,16 @@ using InterGalacticEcomm.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InterGalacticEcomm.Migrations
 {
     [DbContext(typeof(GalacticDbContext))]
-    partial class GalacticDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210216234832_admin-role")]
+    partial class adminrole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,14 +88,14 @@ namespace InterGalacticEcomm.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "34234gety45tb45v45",
+                            Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "71cadef9-e7c4-4d56-bc29-e9104c64cf54",
+                            ConcurrencyStamp = "c96c51bd-a204-4819-8350-07c725e0dfcb",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEG+3i9D03iBhtBfU2KEPFEjOOn4ypzC0uT+RZk8mkPEiiW9WxXmNQEwqCnYImSMA2g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG/Xfv1UVgBTtAPK9JZ83X9kAz/9bjAFQXazdm9QCXu3pu96kRVhU7d3qX2VaijLaQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "01b800c0-048a-4582-9274-b3e3add66f55",
+                            SecurityStamp = "06abb51f-a321-4ab8-bfe8-62fde4b54bda",
                             TwoFactorEnabled = false,
                             UserName = "SuperAdmin"
                         });

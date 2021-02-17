@@ -10,8 +10,8 @@ namespace InterGalacticEcomm.Models.Interface
 {
     public interface IUserService
     {
-        public Task<AppUserDTO> Register(RegisterUser data, ModelStateDictionary modelState);
+        Task<AppUserDTO> Register(RegisterUser data, ModelStateDictionary modelState);
 
-        public Task<AppUserDTO> Authenticate(string userName, string password);
+        Task<AppUserDTO> Authenticate(string userName, string password);
     }
 }

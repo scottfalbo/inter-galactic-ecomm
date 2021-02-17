@@ -45,8 +45,15 @@ namespace InterGalacticEcomm
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));   // make other cruds
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+                options.AddPolicy("read", policy => policy.RequireClaim("permissions", "read"));
+                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
             });
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddTransient<IUserService, IdentityUserService>();
 
