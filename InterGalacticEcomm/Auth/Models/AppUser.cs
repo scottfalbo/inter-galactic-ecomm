@@ -8,5 +8,6 @@ namespace InterGalacticEcomm.Models
 {
     public class AppUser : IdentityUser
     {
+        // blank on purpose
     }
 }

@@ -1,11 +1,13 @@
 using InterGalacticEcomm.Data;
 using InterGalacticEcomm.Models;
+using InterGalacticEcomm.Models.Interface;
 using InterGalacticEcomm.Models.Interface.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,9 +33,6 @@ namespace InterGalacticEcomm
                 options.UseSqlServer(connectionString);
             });
 
-            services.AddMvc();
-            services.AddControllers();
-
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = false;
@@ -42,18 +41,24 @@ namespace InterGalacticEcomm
 
             services.AddScoped<JwtTokenService>();
 
-            services.AddAuthentication(options =>
+            services.AddAuthentication();
+
+            services.AddAuthorization(options =>
             {
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.AddPolicy("create", policy => policy.RequireClaim("permissions", "create"));
+                options.AddPolicy("read", policy => policy.RequireClaim("permissions", "read"));
+                options.AddPolicy("update", policy => policy.RequireClaim("permissions", "update"));
+                options.AddPolicy("delete", policy => policy.RequireClaim("permissions", "delete"));
             });
-                //.AddJwtBearer(options =>
-                //{
-                    //options.TokenValidationParameters = JwtTokenService.GetValidationParams(configuration);
-                //});
 
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
+            services.AddTransient<IUserService, IdentityUserService>();
+
+            services.AddMvc();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +70,9 @@ namespace InterGalacticEcomm
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

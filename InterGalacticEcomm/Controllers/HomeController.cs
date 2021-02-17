@@ -1,4 +1,6 @@
 ﻿using InterGalacticEcomm.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -36,13 +38,14 @@ namespace InterGalacticEcomm.Controllers
             return View(categoriesList);
         }
 
-
+        [HttpGet]
         public IActionResult Product(string Name)
         {
             Product product = new Product() {Name = Name };
 
             return View(product);
         }
+
 
         //We don't need Products() at the moment. We are basically using this in our category.cshtml
         public IActionResult Products()
@@ -70,6 +73,54 @@ namespace InterGalacticEcomm.Controllers
                 new Category(){CategoryName = "Category 2", Id = 2, Description = "This category will display ALL category 2 items, such interactive"}
             };
             return categoriesList;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Authorize(Roles="Admin")]
+        public async Task CreateCategory()
+        {
+
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task CreateProduct()
+        {
+
+        }
+
+        [HttpPut]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task UpdateCategory()
+        {
+
+        }
+
+        [HttpPut]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task UpdateProduct()
+        {
+
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task DeleteCategory()
+        {
+
+        }
+
+        [HttpDelete]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task DeleteProduct()
+        {
+
         }
     }
 }

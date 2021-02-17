@@ -1,4 +1,6 @@
 ﻿using InterGalacticEcomm.Models;
+using InterGalacticEcomm.Models.API;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -22,6 +24,8 @@ namespace InterGalacticEcomm.Data
             modelBuilder.Entity<CategoryProduct>().HasKey(x => new { x.CategoryId, x.ProductId });
 
             //seedRole stuff can go here.
+            SeedRole(modelBuilder, "Admin", "read", "create", "update", "delete");
+            SeedRole(modelBuilder, "Guest", "read");
 
             modelBuilder.Entity<Product>().HasData(
                 new Product {Name = "Plumbus", Description = "The plumbus is...well...a plumbus", Price = 199.99m, Id = 1},
@@ -35,13 +39,39 @@ namespace InterGalacticEcomm.Data
                 new Category { CategoryName = "Morty-Tier", Description = "Literally costs chocolate", Id = 2 },
                 new Category { CategoryName = "InterDimensional Cable", Description = "As seen in T.V", Id = 3 }
                 );
+ 
         }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryProduct> CategoryProducts { get; set; }
 
 
         //put the seed role stuff here
+        private int id = 1;
+        private void SeedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName.ToLower(),
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString()
+            };
+            modelBuilder.Entity<IdentityRole>().HasData(role);
+
+            var roleClaims = permissions.Select(permission =>
+               new IdentityRoleClaim<string>
+               {
+                   Id = id++,
+                   RoleId = role.Id,
+                   ClaimType = "permissions",
+                   ClaimValue = permission
+               });
+            modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(roleClaims);
+            //claim type comes from startup seed method call, line 90ish
+        }
     }
+
 
 }

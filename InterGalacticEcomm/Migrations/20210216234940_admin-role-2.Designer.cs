@@ -4,14 +4,16 @@ using InterGalacticEcomm.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace InterGalacticEcomm.Migrations
 {
     [DbContext(typeof(GalacticDbContext))]
-    partial class GalacticDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210216234940_admin-role-2")]
+    partial class adminrole2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
