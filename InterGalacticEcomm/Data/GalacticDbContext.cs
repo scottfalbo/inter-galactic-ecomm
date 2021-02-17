@@ -39,7 +39,7 @@ namespace InterGalacticEcomm.Data
                 new Category { CategoryName = "Morty-Tier", Description = "Literally costs chocolate", Id = 2 },
                 new Category { CategoryName = "InterDimensional Cable", Description = "As seen in T.V", Id = 3 }
                 );
- 
+
         }
 
         public DbSet<Product> Products { get; set; }

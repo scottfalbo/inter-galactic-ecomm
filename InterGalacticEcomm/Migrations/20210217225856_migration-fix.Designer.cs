@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InterGalacticEcomm.Migrations
 {
     [DbContext(typeof(GalacticDbContext))]
-    [Migration("20210216234832_admin-role")]
-    partial class adminrole
+    [Migration("20210217225856_migration-fix")]
+    partial class migrationfix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -84,21 +84,6 @@ namespace InterGalacticEcomm.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c96c51bd-a204-4819-8350-07c725e0dfcb",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEG/Xfv1UVgBTtAPK9JZ83X9kAz/9bjAFQXazdm9QCXu3pu96kRVhU7d3qX2VaijLaQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "06abb51f-a321-4ab8-bfe8-62fde4b54bda",
-                            TwoFactorEnabled = false,
-                            UserName = "SuperAdmin"
-                        });
                 });
 
             modelBuilder.Entity("InterGalacticEcomm.Models.Category", b =>
@@ -263,13 +248,6 @@ namespace InterGalacticEcomm.Migrations
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
                             Name = "Guest",
                             NormalizedName = "GUEST"
-                        },
-                        new
-                        {
-                            Id = "admin_permission",
-                            ConcurrencyStamp = "admin_permission",
-                            Name = "SuperAdmin",
-                            NormalizedName = "SuperAdmin"
                         });
                 });
 
@@ -393,13 +371,6 @@ namespace InterGalacticEcomm.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "34234gety45tb45v45",
-                            RoleId = "admin_permission"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

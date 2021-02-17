@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InterGalacticEcomm.Migrations
 {
-    public partial class inital : Migration
+    public partial class migrationfix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -215,6 +215,15 @@ namespace InterGalacticEcomm.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "admin", "00000000-0000-0000-0000-000000000000", "Admin", "ADMIN" },
+                    { "guest", "00000000-0000-0000-0000-000000000000", "Guest", "GUEST" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "CategoryName", "Description" },
                 values: new object[,]
@@ -234,6 +243,18 @@ namespace InterGalacticEcomm.Migrations
                     { 3, null, null, null, "Just another Morty", "Morty", 99.99m },
                     { 4, null, null, null, "Practical pencil....but suspicious", "Pencil Vester", 29.99m },
                     { 5, null, null, null, "Rahhhhh dude", "Ghost-In-A-Jar", 50.00m }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoleClaims",
+                columns: new[] { "Id", "ClaimType", "ClaimValue", "RoleId" },
+                values: new object[,]
+                {
+                    { 1, "permissions", "read", "admin" },
+                    { 2, "permissions", "create", "admin" },
+                    { 3, "permissions", "update", "admin" },
+                    { 4, "permissions", "delete", "admin" },
+                    { 5, "permissions", "read", "guest" }
                 });
 
             migrationBuilder.CreateIndex(

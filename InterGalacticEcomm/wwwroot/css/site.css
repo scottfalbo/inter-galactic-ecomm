@@ -1,0 +1,42 @@
+﻿body, html{
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    background: #eee;
+    display:flex;
+    flex-direction:column;
+}
+
+header{
+    background: #111;
+    color:ivory;
+    height:3rem;
+    line-height: 3rem;
+}
+
+header h1{
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+main{
+    flex:1;
+    padding:3rem;
+}
+
+footer{
+    background:#eee;
+    height:5rem;
+}
+
+label{
+    display:block;
+    margin-bottom:1rem;
+}
+
+label span{
+    display:block;
+    margin-bottom:.33rem;
+}
