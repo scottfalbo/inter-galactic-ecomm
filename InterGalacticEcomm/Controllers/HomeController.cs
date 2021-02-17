@@ -11,12 +11,22 @@ namespace InterGalacticEcomm.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Home Page
+        /// </summary>
+        /// <returns> Index View() </returns>
         public IActionResult Index()
         {
             List<Category> categoriesList = GetCategories();
             return View(categoriesList);
         }
 
+        /// <summary>
+        /// Get a single category by ID from the DB and send to view
+        /// </summary>
+        /// <param name="id"> Category Id </param>
+        /// <returns> Category View() </returns>
+        [HttpGet]
         public IActionResult Category(string categoryName, string description) //this will be int id
         {
             List<Product> productList = GetProducts();
@@ -30,7 +40,11 @@ namespace InterGalacticEcomm.Controllers
             return View(productVM);
         }
 
-        //We are using the Categories() on the index page so the user is able to navigate. Categories() is useless at the moment.
+        /// <summary>
+        /// Get a list of all of categories and send them to the view
+        /// </summary>
+        /// <returns> Categories View() </returns>
+        [HttpGet]
         public IActionResult Categories()
         {
             List<Category> categoriesList = GetCategories();
@@ -38,6 +52,11 @@ namespace InterGalacticEcomm.Controllers
             return View(categoriesList);
         }
 
+        /// <summary>
+        /// Get a Product by ID and send it to the view
+        /// </summary>
+        /// <param name="id"> Product Id </param>
+        /// <returns> Product View() </returns>
         [HttpGet]
         public IActionResult Product(string Name)
         {
@@ -46,15 +65,84 @@ namespace InterGalacticEcomm.Controllers
             return View(product);
         }
 
-
-        //We don't need Products() at the moment. We are basically using this in our category.cshtml
-        public IActionResult Products()
+        /// <summary>
+        /// Creates and saves a new Category object in the DB
+        /// </summary>
+        /// <returns> Newly created Category object </returns>
+        [HttpPost]
+        [Authorize]
+        [Authorize(Roles="Admin")]
+        public async Task<Category> CreateCategory()
         {
-            List<Product> productList = GetProducts();
-
-            return View(productList);
+            return new Category();
         }
 
+        /// <summary>
+        /// Creates and saves a new Product object in the DB
+        /// </summary>
+        /// <returns> Newly created Product object </returns>
+        [HttpPost]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task<Product> CreateProduct()
+        {
+            return new Product();
+        }
+
+        /// <summary>
+        /// Update and save the data on a Catergory by Id
+        /// </summary>
+        /// <param name="id"> Category Id </param>
+        /// <returns> Category View() </returns>
+        [HttpPut]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task<Category> UpdateCategory(int id)
+        {
+            return new Category();
+        }
+
+        /// <summary>
+        /// Udpate and save the data on a Product by Id
+        /// </summary>
+        /// <param name="id"> Product Id </param>
+        /// <returns> Product View() </returns>
+        [HttpPut]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task<Product> UpdateProduct(int id)
+        {
+            return new Product();
+        }
+
+        /// <summary>
+        /// Delete a Category by Id
+        /// </summary>
+        /// <param name="id"> Category Id </param>
+        [HttpDelete]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task DeleteCategory(int id)
+        {
+
+        }
+
+        /// <summary>
+        /// Delete a Product by Id
+        /// </summary>
+        /// <param name="id"> Product Id </param>
+        [HttpDelete]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
+        public async Task DeleteProduct(int id)
+        {
+
+        }
+
+        /// <summary>
+        /// Helper methods for making dummy data, going away soon once DB is hooked up
+        /// </summary>
+        /// <returns></returns>
         public List<Product> GetProducts()
         {
             List<Product> productList = new List<Product>()
@@ -73,54 +161,6 @@ namespace InterGalacticEcomm.Controllers
                 new Category(){CategoryName = "Category 2", Id = 2, Description = "This category will display ALL category 2 items, such interactive"}
             };
             return categoriesList;
-        }
-
-        [HttpPost]
-        [Authorize]
-        [Authorize(Roles="Admin")]
-        public async Task CreateCategory()
-        {
-
-        }
-
-        [HttpPost]
-        [Authorize]
-        [Authorize(Roles = "Admin")]
-        public async Task CreateProduct()
-        {
-
-        }
-
-        [HttpPut]
-        [Authorize]
-        [Authorize(Roles = "Admin")]
-        public async Task UpdateCategory()
-        {
-
-        }
-
-        [HttpPut]
-        [Authorize]
-        [Authorize(Roles = "Admin")]
-        public async Task UpdateProduct()
-        {
-
-        }
-
-        [HttpDelete]
-        [Authorize]
-        [Authorize(Roles = "Admin")]
-        public async Task DeleteCategory()
-        {
-
-        }
-
-        [HttpDelete]
-        [Authorize]
-        [Authorize(Roles = "Admin")]
-        public async Task DeleteProduct()
-        {
-
         }
     }
 }
