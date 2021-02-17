@@ -17,25 +17,30 @@ namespace InterGalacticEcomm.Controllers
         {
             UserService = service;
         }
+
         //login screen
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
         }
 
         //register screen
+        [AllowAnonymous]
         public IActionResult Signup()
         {
             return View();
         }
 
         //error screen
+        [AllowAnonymous]
         public IActionResult Error()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<AppUserDTO>> Authenticate(LoginData data)
         {
             var user = await UserService.Authenticate(data.UserName, data.Password);
@@ -45,27 +50,28 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<AppUserDTO>> Register(RegisterUser data)
         {
             data.Roles = new List<string>() { "Guest" };
 
             var user = await UserService.Register(data, this.ModelState);
             if (user != null)
-                return Redirect("/login/welcome");
+                return Redirect("/login/");
 
             // not enough to catch errors, do a try catch with a redirect
             //return Redirect("/login/error");
-            return Ok(); // temp return for linter
+            throw new Exception("womp womp"); // temp return for linter
         }
 
-
+        [Authorize]
         public IActionResult Welcome()
         {
             return View();
         }
 
         [Authorize]
-        //[Authorize(Roles="Admin")]
+        [Authorize(Roles="Admin")]
         //[Authorize(Policy="read")]
         public IActionResult Profile()
         {

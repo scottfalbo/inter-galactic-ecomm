@@ -39,65 +39,7 @@ namespace InterGalacticEcomm.Data
                 new Category { CategoryName = "Morty-Tier", Description = "Literally costs chocolate", Id = 2 },
                 new Category { CategoryName = "InterDimensional Cable", Description = "As seen in T.V", Id = 3 }
                 );
-
-
-            string ADMIN_ID = "34234gety45tb45v45";
-            string ROLE_ID = "admin_permission";
-
-            //seed admin role
-            modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole
-                {
-                    Name = "SuperAdmin",
-                    NormalizedName = "SuperAdmin",
-                    Id = ROLE_ID,
-                    ConcurrencyStamp = ROLE_ID
-                });
-
-
-            //create user
-            var appUser = new AppUser
-            {
-                UserName = "SuperAdmin",
-                Id = ADMIN_ID
-            };
-
-            //set user password
-            PasswordHasher<AppUser> ph = new PasswordHasher<AppUser>();
-            appUser.PasswordHash = ph.HashPassword(appUser, "Password!23");
-
-            //seed user
-            modelBuilder.Entity<AppUser>().HasData(appUser);
-
-            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
-            {
-                RoleId = ROLE_ID,
-                UserId = ADMIN_ID
-            });
-
-
-            /*
-            RegisterUser newAdmin = new RegisterUser
-            {
-                UserName = "Admin1",
-                Password = "Password!23",
-                Email = "admin@admin.com",
-                Roles = new List<string>() { "Admin" }
-            };
-
-            
-
-            modelBuilder.Entity<AppUser>().HasData(
-                
-                );
-            */
-
-            /*
-            var userStore = new UserStore<ApplicationUser>(context);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-            var user = new ApplicationUser { UserName = "username" };
-            userManager.Create(user, "password");
-            */
+ 
         }
 
         public DbSet<Product> Products { get; set; }

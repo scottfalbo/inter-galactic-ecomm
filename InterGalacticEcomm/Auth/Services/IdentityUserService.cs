@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace InterGalacticEcomm.Models.Interface.Services
@@ -11,10 +12,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
     public class IdentityUserService : IUserService
     {
         private readonly UserManager<AppUser> UserManager;
+        private SignInManager<AppUser> signInManager;
 
-        public IdentityUserService(UserManager<AppUser> registerUser)
+        public IdentityUserService(UserManager<AppUser> registerUser, SignInManager<AppUser> sim)
         {
             UserManager = registerUser;
+            signInManager = sim;
         }
 
         public async Task<AppUserDTO> Register(RegisterUser data, ModelStateDictionary modelState)
@@ -42,20 +45,30 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
         public async Task<AppUserDTO> Authenticate(string userName, string password)
         {
-            var user = await UserManager.FindByNameAsync(userName);
+            var result = await signInManager.PasswordSignInAsync(userName, password, true, false);
 
-            if (await UserManager.CheckPasswordAsync(user, password))
+            if (result.Succeeded)
             {
-
+                var user = await UserManager.FindByNameAsync(userName);
                 return new AppUserDTO
                 {
+                    Id = user.Id,
                     UserName = user.UserName,
-                    Id = user.Id
+                    Roles = await UserManager.GetRolesAsync(user)
                 };
             }
-
             throw new Exception("womp womp");
         }
-        
+
+        public async Task<AppUserDTO> GetUser(ClaimsPrincipal principal)
+        {
+            var user = await UserManager.GetUserAsync(principal);
+            return new AppUserDTO
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Roles = await UserManager.GetRolesAsync(user)
+            };
+        }
     }
 }
