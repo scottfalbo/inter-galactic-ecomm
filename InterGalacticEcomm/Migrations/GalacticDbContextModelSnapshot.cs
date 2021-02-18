@@ -82,21 +82,6 @@ namespace InterGalacticEcomm.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "34234gety45tb45v45",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "71cadef9-e7c4-4d56-bc29-e9104c64cf54",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEG+3i9D03iBhtBfU2KEPFEjOOn4ypzC0uT+RZk8mkPEiiW9WxXmNQEwqCnYImSMA2g==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "01b800c0-048a-4582-9274-b3e3add66f55",
-                            TwoFactorEnabled = false,
-                            UserName = "SuperAdmin"
-                        });
                 });
 
             modelBuilder.Entity("InterGalacticEcomm.Models.Category", b =>
@@ -261,13 +246,6 @@ namespace InterGalacticEcomm.Migrations
                             ConcurrencyStamp = "00000000-0000-0000-0000-000000000000",
                             Name = "Guest",
                             NormalizedName = "GUEST"
-                        },
-                        new
-                        {
-                            Id = "admin_permission",
-                            ConcurrencyStamp = "admin_permission",
-                            Name = "SuperAdmin",
-                            NormalizedName = "SuperAdmin"
                         });
                 });
 
@@ -391,13 +369,6 @@ namespace InterGalacticEcomm.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "34234gety45tb45v45",
-                            RoleId = "admin_permission"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

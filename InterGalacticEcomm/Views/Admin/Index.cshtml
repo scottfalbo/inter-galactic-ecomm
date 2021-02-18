@@ -1,0 +1,19 @@
+﻿@model IEnumerable<InterGalacticEcomm.Models.Category>
+
+<h1>Here is the Admin/Index page</h1>
+
+<ul>
+    @foreach (var item in Model)
+    {
+<li>
+    <a asp-controller="Admin" asp-action="Category" asp-route-Id="@item.Id">@item.CategoryName</a>
+</li>}
+
+</ul>
+
+@if (User.Identity.IsAuthenticated)
+    {
+        <p>Administrator permissions:</p>
+        <a href=" /admin/product">Product</a>
+        <a href="/admin/category">Category</a>
+    }

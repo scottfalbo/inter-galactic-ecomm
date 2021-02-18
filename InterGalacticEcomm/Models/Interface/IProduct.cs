@@ -7,5 +7,6 @@ namespace InterGalacticEcomm.Models.Interface
 {
     public class IProduct
     {
+
     }
 }
