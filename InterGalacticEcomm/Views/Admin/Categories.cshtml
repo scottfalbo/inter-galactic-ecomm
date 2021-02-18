@@ -1,7 +1,23 @@
-﻿@model IEnumerable<InterGalacticEcomm.Models.Category>
+﻿@model InterGalacticEcomm.Models.CategoryListVM
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="Admin" method="post" asp-action="category">
+        <label>
+            <p>Create a Category</p>
+            <span>Name</span>
+            <input asp-for="@Model.Category.CategoryName" />
+
+            <span>Description</span>
+            <input asp-for="@Model.Category.Description" />
+
+            <input type="submit" value="Create" />
+        </label>
+    </form>
+}
 
 <ul>
-    @foreach (var item in Model)
+    @foreach (var item in Model.CategoryList)
     {
         <li>
             <a asp-controller="Admin" asp-action="Category" asp-route-Id="@item.Id">@item.CategoryName</a>

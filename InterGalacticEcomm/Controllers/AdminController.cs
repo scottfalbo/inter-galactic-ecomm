@@ -28,7 +28,7 @@ namespace InterGalacticEcomm.Controllers
             CategoryProductVM catVM = new CategoryProductVM()
             {
                 Category = category,
-                Product = new List<Product>()
+                Product = await _admin.GetProducts()
             };
 
             if (category == null)
@@ -41,7 +41,14 @@ namespace InterGalacticEcomm.Controllers
         public async Task<IActionResult> Categories()
         {
             var categories = await _admin.GetCategories();
-            return View(categories);
+
+            CategoryListVM categoryVM = new CategoryListVM()
+            {
+                Category = new Category(),
+                CategoryList = categories
+            };
+
+            return View(categoryVM);
         }
 
         [HttpGet]
@@ -91,8 +98,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        [Authorize]
-        [Authorize(Roles = "Admin")]
+        //[Authorize]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Product(Product product)
         {
             await _admin.CreateProduct(product);
@@ -108,12 +115,13 @@ namespace InterGalacticEcomm.Controllers
             return Redirect("/Admin/Products");
         }
 
-        [HttpPut]
+        [HttpPost]
         //[Authorize]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateCategory(int Id, Category category)
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateCategory(Category category)
         {
-            await _admin.UpdateCategory(Id, category);
+            await _admin.UpdateCategory(category.Id, category);
 
             return Redirect("/Admin/Categories");
         }
@@ -121,27 +129,15 @@ namespace InterGalacticEcomm.Controllers
         [HttpPost]
         //[Authorize]
         //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        //[AllowAnonymous]
         public async Task<IActionResult> UpdateProduct(Product product)
         {
-            /*
-            Product product = new Product() 
-            {
-                Id = Id,
-                Name = Name,
-                Description = Description,
-                Price = Price
-            };
-            */
-            
-
             await _admin.UpdateProduct(product.Id, product);
-
 
             return Redirect("/Admin/Products");
         }
 
-        [HttpDelete]
+        [HttpPost]
         //[Authorize]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int Id)
@@ -151,9 +147,10 @@ namespace InterGalacticEcomm.Controllers
             return Redirect("/Admin/Categories");
         }
 
-        [HttpDelete]
-        [Authorize]
-        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        //[Authorize]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteProduct(int Id)
         {
             await _admin.DeleteProduct(Id);

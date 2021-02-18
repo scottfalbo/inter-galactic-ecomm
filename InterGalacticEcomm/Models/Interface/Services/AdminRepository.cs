@@ -33,7 +33,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
             {
                 Name = product.Name,
                 Description = product.Description,
-                Price = product.Price
+                Price = product.Price,
+                Category = product.Category
             };
             _context.Entry(prod).State = Microsoft.EntityFrameworkCore.EntityState.Added;
 
@@ -92,6 +93,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 .ToListAsync();
         }
 
+        //TODO: This is where shit breaks
         public async Task AddProductToCategory(int categoryId, int productId)
         {
             CategoryProduct categoryProduct = new CategoryProduct()
@@ -131,14 +133,13 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 Id = Id,
                 Name = product.Name,
                 Description = product.Description,
-                Price = product.Price
+                Price = product.Price,
+                Category = product.Category
             };
             _context.Entry(prod).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
 
             await _context.SaveChangesAsync();
         }
-
-
 
         public async Task DeleteCategory(int Id)
         {
@@ -151,7 +152,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
         public async Task DeleteProduct(int Id)
         {
             Product product = await _context.Products.FindAsync(Id);
-            _context.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+            _context.Entry(product).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();
         }

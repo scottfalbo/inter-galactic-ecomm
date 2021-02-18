@@ -6,29 +6,15 @@
 
 <p>Here are all the products within this category:</p>
 <ul>
-    @foreach (var item in @Model.Product)
+    @foreach (var item in @Model.Category.CategoryProducts)
     {
 <li>
-    <a asp-controller="Admin" asp-action="Product" asp-route-Name="@item.Name">@item.Name</a>
+    <a asp-controller="Admin" asp-action="Product" asp-route-Name="@item">@item.Name</a>
 </li>}
 </ul>
 
 @if (User.Identity.IsAuthenticated)
 {
-    <form asp-controller="Admin" method="post" asp-action="category">
-        <label>
-            <p>Create a Category</p>
-            <span>Name</span>
-            <input asp-for="@Model.Category.CategoryName" />
-
-            <span>Description</span>
-            <input asp-for="@Model.Category.Description" />
-
-            <input type="submit" value="Create" />
-        </label>
-    </form>
-
-    <div asp-validation-summary="All"></div>
 
     <form asp-controller="Admin" method="post" asp-action="UpdateCategory">
         <label>
@@ -39,7 +25,7 @@
             <span>Description</span>
             <input asp-for="@Model.Category.Description" />
 
-            <input type="hidden" name="Id" value="@Model.Category.Id" />
+            <input asp-for="@Model.Category.Id" />
 
 
             <input type="submit" value="Update" />
@@ -49,13 +35,33 @@
     <div asp-validation-summary="All"></div>
 
 
-    <form asp-controller="Admin" method="delete" asp-action="DeleteCategory">
+
+    <form asp-controller="Admin" method="post" asp-action="AddProductToCategory">
+        <label>
+            <p>Add a Product to this Category</p>
+
+            <span>Products</span>
+            <select>
+                @foreach (var item in @Model.Product)
+                {
+                <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+
+            <input type ="hidden" asp-for="@Model.Category.Id" />
+
+            <input type="submit" value="Update" />
+        </label>
+    </form>
+
+
+    <form asp-controller="Admin" method="post" asp-action="DeleteCategory">
         <label>
             <p>Delete a Category</p>
             <span>Name</span>
             <input asp-for="@Model.Category.CategoryName" />
 
-            <input type="hidden" name="Id" value="@Model.Category.Id" />
+            <input type="hidden" asp-for="@Model.Category.Id" />
 
             <input type="submit" value="Delete" />
         </label>
