@@ -40,16 +40,21 @@
 
     <p>Add a Product to this Category</p>
 
-    <form asp-controller="Admin" method="post" asp-action="AddProductToCategory">
+    <form asp-controller="Admin" method="post" asp-action="AddProductToCategory" runat="server">
         <label>
 
             <input asp-for="@Model.Category.Id" />
 
-            @Html.DropDownListFor(x => x.Product,
-    new SelectList(@Model.Product), "select a product")
+            <select name="Product" id="productSelect">
+                @foreach (var item in @Model.Product)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
 
-            <input type="submit" value="Update" />
+            </select> 
+
         </label>
+            <asp:Button Text="Submit" runat"server" OnClick="Submit" />
     </form>
 
 
