@@ -27,7 +27,7 @@
             <span>Description</span>
             <input asp-for="@Model.Category.Description" />
 
-            <input asp-for="@Model.Category.Id" />
+            <input type="hidden" asp-for="@Model.Category.Id" />
 
 
             <input type="submit" value="Update" />
@@ -43,10 +43,14 @@
     <form asp-controller="Admin" method="post" asp-action="AddProductToCategory">
         <label>
 
-            <input asp-for="@Model.Category.Id" />
+            <select>
+                @foreach (var item in @Model.Product)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
 
-            @Html.DropDownListFor(x => x.Product,
-    new SelectList(@Model.Product), "select a product")
+            <input type="hidden" asp-for="@Model.Category.Id" />
 
             <input type="submit" value="Update" />
         </label>

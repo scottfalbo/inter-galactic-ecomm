@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InterGalacticEcomm.Migrations
 {
-    public partial class newinit : Migration
+    public partial class addedURL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -167,6 +167,29 @@ namespace InterGalacticEcomm.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    CategoryId = table.Column<int>(nullable: true),
+                    URL = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CategoryProducts",
                 columns: table => new
                 {
@@ -182,36 +205,12 @@ namespace InterGalacticEcomm.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: true),
-                    CategoryProductCategoryId = table.Column<int>(nullable: true),
-                    CategoryProductProductId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
+                        name: "FK_CategoryProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Products_CategoryProducts_CategoryProductCategoryId_CategoryProductProductId",
-                        columns: x => new { x.CategoryProductCategoryId, x.CategoryProductProductId },
-                        principalTable: "CategoryProducts",
-                        principalColumns: new[] { "CategoryId", "ProductId" },
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -235,14 +234,14 @@ namespace InterGalacticEcomm.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "CategoryProductCategoryId", "CategoryProductProductId", "Description", "Name", "Price" },
+                columns: new[] { "Id", "CategoryId", "Description", "Name", "Price", "URL" },
                 values: new object[,]
                 {
-                    { 1, null, null, null, "The plumbus is...well...a plumbus", "Plumbus", 199.99m },
-                    { 2, null, null, null, "Pickles but with faces", "Pickle Rick", 24.99m },
-                    { 3, null, null, null, "Just another Morty", "Morty", 99.99m },
-                    { 4, null, null, null, "Practical pencil....but suspicious", "Pencil Vester", 29.99m },
-                    { 5, null, null, null, "Rahhhhh dude", "Ghost-In-A-Jar", 50.00m }
+                    { 1, null, "The plumbus is...well...a plumbus", "Plumbus", 199.99m, null },
+                    { 2, null, "Pickles but with faces", "Pickle Rick", 24.99m, null },
+                    { 3, null, "Just another Morty", "Morty", 99.99m, null },
+                    { 4, null, "Practical pencil....but suspicious", "Pencil Vester", 29.99m, null },
+                    { 5, null, "Rahhhhh dude", "Ghost-In-A-Jar", 50.00m, null }
                 });
 
             migrationBuilder.InsertData(
@@ -297,14 +296,14 @@ namespace InterGalacticEcomm.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CategoryProducts_ProductId",
+                table: "CategoryProducts",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_CategoryProductCategoryId_CategoryProductProductId",
-                table: "Products",
-                columns: new[] { "CategoryProductCategoryId", "CategoryProductProductId" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -325,7 +324,7 @@ namespace InterGalacticEcomm.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "CategoryProducts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -334,7 +333,7 @@ namespace InterGalacticEcomm.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "CategoryProducts");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Categories");

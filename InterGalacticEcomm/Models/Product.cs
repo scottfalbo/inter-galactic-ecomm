@@ -16,6 +16,10 @@ namespace InterGalacticEcomm.Models
         public string Description { get; set; }
         public Category Category { get; set; }
 
-        //public List<string> Reviews {get;set;}
+        public string URL {get;set;}
+
+        //resource group, add storage container(search bar)
+        //name the container images
+
     }
 }

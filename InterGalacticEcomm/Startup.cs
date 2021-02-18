@@ -39,8 +39,6 @@ namespace InterGalacticEcomm
             })
             .AddEntityFrameworkStores<GalacticDbContext>();
 
-            services.AddScoped<JwtTokenService>();
-
             services.AddAuthentication();
 
             services.AddAuthorization(options =>
@@ -57,6 +55,7 @@ namespace InterGalacticEcomm
 
             services.AddTransient<IUserService, IdentityUserService>();
             services.AddTransient<IAdmin, AdminRepository>();
+            services.AddTransient<IUploadService, UploadService>();
 
             services.AddMvc();
             services.AddControllers();

@@ -34,7 +34,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-                Category = product.Category
+                Category = product.Category,
+                URL = product.URL
             };
             _context.Entry(prod).State = Microsoft.EntityFrameworkCore.EntityState.Added;
 
@@ -49,12 +50,6 @@ namespace InterGalacticEcomm.Models.Interface.Services
                     CategoryName = z.CategoryName,
                     Description = z.Description,
                     CategoryProducts = z.CategoryProducts
-                 /*       .Select(p => new Product
-                        {
-                            Id = p.Product.Id,
-                            Name = p.Product.Name,
-                            Description = p.Product.Description
-                        }).ToList()*/
                 })
                 .FirstOrDefaultAsync();
         }
@@ -68,7 +63,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
                     Name = z.Name,
                     Description = z.Description,
                     Price = z.Price,
-                    Category = z.Category
+                    Category = z.Category,
+                    URL = z.URL
                 })
                 .FirstOrDefaultAsync();
         }
@@ -94,7 +90,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
                     Name = z.Name,
                     Description = z.Description,
                     Price = z.Price,
-                    Category = z.Category
+                    Category = z.Category,
+                    URL = z.URL
                 })
                 .ToListAsync();
         }
@@ -102,6 +99,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
         //TODO: This is where shit breaks
         public async Task AddProductToCategory(int categoryId, int productId)
         {
+
             CategoryProduct categoryProduct = new CategoryProduct()
             {
                 ProductId = productId,
@@ -140,7 +138,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 Name = product.Name,
                 Description = product.Description,
                 Price = product.Price,
-                Category = product.Category
+                Category = product.Category,
+                URL = product.URL
             };
             _context.Entry(prod).State = EntityState.Modified;
 
@@ -162,8 +161,5 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
             await _context.SaveChangesAsync();
         }
-
-
-
     }
 }

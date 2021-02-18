@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InterGalacticEcomm.Migrations
 {
     [DbContext(typeof(GalacticDbContext))]
-    [Migration("20210218000352_new-init")]
-    partial class newinit
+    [Migration("20210218225830_added-URL")]
+    partial class addedURL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,6 +134,8 @@ namespace InterGalacticEcomm.Migrations
 
                     b.HasKey("CategoryId", "ProductId");
 
+                    b.HasIndex("ProductId");
+
                     b.ToTable("CategoryProducts");
                 });
 
@@ -147,12 +149,6 @@ namespace InterGalacticEcomm.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryProductCategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoryProductProductId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -162,11 +158,12 @@ namespace InterGalacticEcomm.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
 
+                    b.Property<string>("URL")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("CategoryProductCategoryId", "CategoryProductProductId");
 
                     b.ToTable("Products");
 
@@ -399,6 +396,12 @@ namespace InterGalacticEcomm.Migrations
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("InterGalacticEcomm.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("InterGalacticEcomm.Models.Product", b =>
@@ -406,10 +409,6 @@ namespace InterGalacticEcomm.Migrations
                     b.HasOne("InterGalacticEcomm.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
-
-                    b.HasOne("InterGalacticEcomm.Models.CategoryProduct", null)
-                        .WithMany("ProductList")
-                        .HasForeignKey("CategoryProductCategoryId", "CategoryProductProductId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
