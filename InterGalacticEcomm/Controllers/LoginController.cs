@@ -72,7 +72,7 @@ namespace InterGalacticEcomm.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<AppUserDTO>> Register(RegisterUser data)
         {
-            data.Roles = new List<string>() { "Guest" };
+            //data.Roles = new List<string>() { "Guest" };
 
             var user = await UserService.Register(data, this.ModelState);
             if (user != null)

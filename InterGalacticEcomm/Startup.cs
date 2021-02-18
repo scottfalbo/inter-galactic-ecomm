@@ -56,6 +56,7 @@ namespace InterGalacticEcomm
             );
 
             services.AddTransient<IUserService, IdentityUserService>();
+            services.AddTransient<IAdmin, AdminRepository>();
 
             services.AddMvc();
             services.AddControllers();
@@ -68,7 +69,7 @@ namespace InterGalacticEcomm
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
             app.UseRouting();
 
             app.UseAuthentication();

@@ -37,7 +37,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
             if (result.Succeeded)
             {
-                await UserManager.AddToRolesAsync(user, data.Roles);
+
+                await UserManager.AddToRolesAsync(user, new List<string>() { "Guest" });
 
                 return new AppUserDTO
                 {

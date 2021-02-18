@@ -1,0 +1,41 @@
+﻿@model InterGalacticEcomm.Models.Product
+
+<h1>Here is your product details page.</h1>
+
+<p>@Model.Name -- @Model.Price -- @Model.Description</p>
+
+
+
+
+    <div asp-validation-summary="All"></div>
+
+    <form asp-controller="Admin" method="post" asp-action="product">
+        <label>
+            <p>Update a product</p>
+            <span>Name</span>
+            <input asp-for="@Model.Name" />
+
+            <span>Description</span>
+            <input asp-for="@Model.Description" />
+
+            <span>Price</span>
+            <input asp-for="@Model.Price" />
+
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <input type="submit" value="Update" />
+        </label>
+    </form>
+
+    <form asp-controller="Admin" method="post" asp-action="product">
+        <label>
+            <p>Delete a product</p>
+            <span>Name</span>
+            <input type ="hidden" asp-for="@Model.Name" />
+
+            <input type="hidden" name="Id" value="@Model.Id" />
+
+            <input type="submit" value="Delete" />
+        </label>
+    </form>
+}

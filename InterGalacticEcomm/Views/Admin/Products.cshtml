@@ -1,0 +1,32 @@
+﻿@model InterGalacticEcomm.Models.ProductListVM
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="Admin" method="post" asp-action="product">
+        <label>
+            <p>Create a product</p>
+            <span>Name</span>
+            <input asp-for="@Model.Product.Name" />
+
+            <span>Description</span>
+            <input asp-for="@Model.Product.Description" />
+
+            <span>Price</span>
+            <input asp-for="@Model.Product.Price" />
+
+            <input type="submit" value="Create" />
+        </label>
+    </form>
+}
+
+    <ul>
+        @foreach (var item in Model.ProductList)
+        {
+            <li>
+                <a asp-controller="Admin" asp-action="Product" asp-route-Name="@item.Name" asp-route-Id="@item.Id">@item.Name</a>
+            </li>
+        }
+
+
+    </ul>
