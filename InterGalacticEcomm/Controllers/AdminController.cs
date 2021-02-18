@@ -111,19 +111,31 @@ namespace InterGalacticEcomm.Controllers
         [HttpPut]
         //[Authorize]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Product(int Id, Category category)
+        public async Task<IActionResult> UpdateCategory(int Id, Category category)
         {
             await _admin.UpdateCategory(Id, category);
 
             return Redirect("/Admin/Categories");
         }
 
-        [HttpPut]
-        [Authorize]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateProduct(int Id, Product product)
+        [HttpPost]
+        //[Authorize]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateProduct(Product product)
         {
-            await _admin.UpdateProduct(Id, product);
+            /*
+            Product product = new Product() 
+            {
+                Id = Id,
+                Name = Name,
+                Description = Description,
+                Price = Price
+            };
+            */
+            
+
+            await _admin.UpdateProduct(product.Id, product);
 
 
             return Redirect("/Admin/Products");
@@ -142,7 +154,7 @@ namespace InterGalacticEcomm.Controllers
         [HttpDelete]
         [Authorize]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Delete(int Id)
+        public async Task<IActionResult> DeleteProduct(int Id)
         {
             await _admin.DeleteProduct(Id);
 
