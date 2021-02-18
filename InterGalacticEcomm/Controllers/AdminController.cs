@@ -61,7 +61,14 @@ namespace InterGalacticEcomm.Controllers
         public async Task<IActionResult> Products()
         {
             var products = await _admin.GetProducts();
-            return View(products);
+
+            ProductListVM newList = new ProductListVM()
+            {
+                Product = new Product(),
+                ProductList = products
+            };
+
+            return View(newList);
         }
 
         [HttpPost]
@@ -104,7 +111,7 @@ namespace InterGalacticEcomm.Controllers
         [HttpPut]
         //[Authorize]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UpdateCategory(int Id, Category category)
+        public async Task<IActionResult> Product(int Id, Category category)
         {
             await _admin.UpdateCategory(Id, category);
 
@@ -117,6 +124,7 @@ namespace InterGalacticEcomm.Controllers
         public async Task<IActionResult> UpdateProduct(int Id, Product product)
         {
             await _admin.UpdateProduct(Id, product);
+
 
             return Redirect("/Admin/Products");
         }
@@ -134,7 +142,7 @@ namespace InterGalacticEcomm.Controllers
         [HttpDelete]
         [Authorize]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteProduct(int Id)
+        public async Task<IActionResult> Delete(int Id)
         {
             await _admin.DeleteProduct(Id);
 
