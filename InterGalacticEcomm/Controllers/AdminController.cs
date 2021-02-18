@@ -93,7 +93,7 @@ namespace InterGalacticEcomm.Controllers
         public async Task<IActionResult> Category(Category category)
         {
             await _admin.CreateCategory(category);
-            Category newCat = await _admin.GetCategory(category.Id);
+            //Category newCat = await _admin.GetCategory(category.Id);
             if (!ModelState.IsValid)
             {
                 return View(category);
@@ -112,7 +112,7 @@ namespace InterGalacticEcomm.Controllers
         public async Task<IActionResult> Product(Product product)
         {
             await _admin.CreateProduct(product);
-            Product newProd = await _admin.GetProduct(product.Id);
+            //Product newProd = await _admin.GetProduct(product.Id);
             if (!ModelState.IsValid)
             {
                 return View(product);
@@ -147,8 +147,10 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddProductToCategory(int categoryId, int productId)
+        public async Task<IActionResult> AddProductToCategory(int categoryId)
         {
+            var productId = Convert.ToInt32(Request.Form["products"]);
+
             await _admin.AddProductToCategory(categoryId, productId);
 
             return Redirect("/Admin/Category");

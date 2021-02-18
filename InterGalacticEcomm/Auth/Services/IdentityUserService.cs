@@ -12,7 +12,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
     public class IdentityUserService : IUserService
     {
         private readonly UserManager<AppUser> UserManager;
-        private SignInManager<AppUser> signInManager;
+        private readonly SignInManager<AppUser> signInManager;
 
         public IdentityUserService(UserManager<AppUser> registerUser, SignInManager<AppUser> sim)
         {

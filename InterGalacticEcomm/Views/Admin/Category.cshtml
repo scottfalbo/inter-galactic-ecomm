@@ -9,17 +9,18 @@
 <ul>
     @foreach (var item in @Model.Category.CategoryProducts)
     {
-<li>
-    <a asp-controller="Admin" asp-action="Product" asp-route-Id="@item.Product.Id">@item.Product.Name</a>
-</li>}
+        <li>
+            <a asp-controller="Admin" asp-action="Product" asp-route-Id="@item.Product.Id">@item.Product.Name</a>
+        </li>
+    }
 </ul>
 
 @if (User.Identity.IsAuthenticated)
 {
 
+    <p>Update a Category</p>
     <form asp-controller="Admin" method="post" asp-action="UpdateCategory">
         <label>
-            <p>Update a Category</p>
             <span>Name</span>
             <input asp-for="@Model.Category.CategoryName" />
 
@@ -37,28 +38,25 @@
 
 
 
+    <p>Add a Product to this Category</p>
+
     <form asp-controller="Admin" method="post" asp-action="AddProductToCategory">
         <label>
-            <p>Add a Product to this Category</p>
 
             <input asp-for="@Model.Category.Id" />
 
-            <span>Products</span>
-            <select>
-                @foreach (var item in @Model.Product)
-                {
-                    <option value="@item.Id">@item.Name</option>
-                }
-            </select>
+            @Html.DropDownListFor(x => x.Product,
+    new SelectList(@Model.Product), "select a product")
 
             <input type="submit" value="Update" />
         </label>
     </form>
 
 
+
+    <p>Delete a Category</p>
     <form asp-controller="Admin" method="post" asp-action="DeleteCategory">
         <label>
-            <p>Delete a Category</p>
 
             <input asp-for="@Model.Category.Id" />
 
