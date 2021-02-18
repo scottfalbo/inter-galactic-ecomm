@@ -22,12 +22,19 @@ namespace InterGalacticEcomm.Controllers
             var categories = await _admin.GetCategories();
             return View(categories);
         }
+
+        [HttpGet]
         public async Task<IActionResult> Category(int Id) //this will be int id
         {
             var category = await _admin.GetCategory(Id);
             CategoryProductVM catVM = new CategoryProductVM()
             {
-                Category = category,
+                Category = new Category()
+                {
+                    Id = Id,
+                    CategoryName = category.CategoryName,
+                    CategoryProducts = category.CategoryProducts
+                },
                 Product = await _admin.GetProducts()
             };
 
@@ -38,6 +45,7 @@ namespace InterGalacticEcomm.Controllers
             return View(catVM);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Categories()
         {
             var categories = await _admin.GetCategories();
@@ -65,6 +73,7 @@ namespace InterGalacticEcomm.Controllers
 
 
         //We don't need Products() at the moment. We are basically using this in our category.cshtml
+        [HttpGet]
         public async Task<IActionResult> Products()
         {
             var products = await _admin.GetProducts();
@@ -138,8 +147,17 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> AddProductToCategory(int categoryId, int productId)
+        {
+            await _admin.AddProductToCategory(categoryId, productId);
+
+            return Redirect("/Admin/Category");
+        }
+
+        [HttpPost]
         //[Authorize]
         //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteCategory(int Id)
         {
             await _admin.DeleteCategory(Id);

@@ -49,6 +49,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
                     CategoryName = z.CategoryName,
                     Description = z.Description,
                     CategoryProducts = z.CategoryProducts
+                 /*       .Select(p => new Product
+                        {
+                            Id = p.Product.Id,
+                            Name = p.Product.Name,
+                            Description = p.Product.Description
+                        }).ToList()*/
                 })
                 .FirstOrDefaultAsync();
         }
@@ -101,7 +107,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 ProductId = productId,
                 CategoryId = categoryId,
             };
-            _context.Entry(categoryProduct).State = Microsoft.EntityFrameworkCore.EntityState.Added;
+            _context.Entry(categoryProduct).State = EntityState.Added;
 
             await _context.SaveChangesAsync();
         }
@@ -109,7 +115,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
         public async Task RemoveProductFromCategory(int categoryId, int productId)
         {
             var categoryProduct = await _context.CategoryProducts.FirstOrDefaultAsync(x => x.CategoryId == categoryId && x.ProductId == productId);
-            _context.Entry(categoryProduct).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+            _context.Entry(categoryProduct).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();
         }
@@ -122,7 +128,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 CategoryName = category.CategoryName,
                 Description = category.Description
             };
-            _context.Entry(cat).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Entry(cat).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
         }
@@ -136,7 +142,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 Price = product.Price,
                 Category = product.Category
             };
-            _context.Entry(prod).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.Entry(prod).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
         }
@@ -144,7 +150,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
         public async Task DeleteCategory(int Id)
         {
             Category cat = await _context.Categories.FindAsync(Id);
-            _context.Entry(cat).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+            _context.Entry(cat).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();
         }
