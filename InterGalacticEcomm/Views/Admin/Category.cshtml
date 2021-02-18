@@ -1,5 +1,6 @@
 ﻿@model InterGalacticEcomm.Models.CategoryProductVM
 
+
 <h1>@Model.Category.CategoryName </h1>
 
 <p>Category Description: @Model.Category.Description</p>
@@ -9,7 +10,7 @@
     @foreach (var item in @Model.Category.CategoryProducts)
     {
 <li>
-    <a asp-controller="Admin" asp-action="Product" asp-route-Name="@item">@item.Name</a>
+    <a asp-controller="Admin" asp-action="Product" asp-route-Id="@item.Product.Id">@item.Product.Name</a>
 </li>}
 </ul>
 
@@ -40,15 +41,15 @@
         <label>
             <p>Add a Product to this Category</p>
 
+            <input asp-for="@Model.Category.Id" />
+
             <span>Products</span>
             <select>
                 @foreach (var item in @Model.Product)
                 {
-                <option value="@item.Id">@item.Name</option>
+                    <option value="@item.Id">@item.Name</option>
                 }
             </select>
-
-            <input type ="hidden" asp-for="@Model.Category.Id" />
 
             <input type="submit" value="Update" />
         </label>
@@ -58,10 +59,8 @@
     <form asp-controller="Admin" method="post" asp-action="DeleteCategory">
         <label>
             <p>Delete a Category</p>
-            <span>Name</span>
-            <input asp-for="@Model.Category.CategoryName" />
 
-            <input type="hidden" asp-for="@Model.Category.Id" />
+            <input asp-for="@Model.Category.Id" />
 
             <input type="submit" value="Delete" />
         </label>
