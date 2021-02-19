@@ -1,7 +1,12 @@
-﻿using InterGalacticEcomm.Models;
+﻿using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
+using InterGalacticEcomm.Models;
 using InterGalacticEcomm.Models.Interface;
+using InterGalacticEcomm.Models.Interface.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +16,12 @@ namespace InterGalacticEcomm.Controllers
 {
     public class AdminController : Controller
     {
+        //public IUploadService UploadService { get; }
+        //public AdminController(IUploadService service)
+        //{
+            //UploadService = service;
+        //}
+
         private readonly IAdmin _admin;
         public AdminController(IAdmin admin)
         {
@@ -24,7 +35,7 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Category(int Id) //this will be int id
+        public async Task<IActionResult> Category(int Id)
         {
             var category = await _admin.GetCategory(Id);
             CategoryProductVM catVM = new CategoryProductVM()
@@ -99,10 +110,6 @@ namespace InterGalacticEcomm.Controllers
                 return View(category);
             }
 
-            //string text = "Sucess";
-            //MessageBox.show(text);
-            //return Content("You made a category!");
-
             return Redirect("/Admin/Categories");
         }
 
@@ -118,9 +125,6 @@ namespace InterGalacticEcomm.Controllers
                 return View(product);
             }
 
-            //return Content("You made a product!");
-            //make a message box or something here, nice job!
-
             return Redirect("/Admin/Products");
         }
 
@@ -131,7 +135,6 @@ namespace InterGalacticEcomm.Controllers
         public async Task<IActionResult> UpdateCategory(Category category)
         {
             await _admin.UpdateCategory(category.Id, category);
-
             return Redirect("/Admin/Categories");
         }
 
@@ -142,17 +145,16 @@ namespace InterGalacticEcomm.Controllers
         public async Task<IActionResult> UpdateProduct(Product product)
         {
             await _admin.UpdateProduct(product.Id, product);
-
             return Redirect("/Admin/Products");
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> AddProductToCategory(int categoryId)
         {
-            var productId = Convert.ToInt32(Request.Form["products"]);
-
+            var productId = Convert.ToInt32(Request.Form["Product"]);
+            //int prodId = ProductId.Value;
             await _admin.AddProductToCategory(categoryId, productId);
-
             return Redirect("/Admin/Category");
         }
 
@@ -163,7 +165,6 @@ namespace InterGalacticEcomm.Controllers
         public async Task<IActionResult> DeleteCategory(int Id)
         {
             await _admin.DeleteCategory(Id);
-
             return Redirect("/Admin/Categories");
         }
 
@@ -176,6 +177,16 @@ namespace InterGalacticEcomm.Controllers
             await _admin.DeleteProduct(Id);
 
             return Redirect("/Admin/Products");
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateImage(IFormFile file)
+        {
+            //Product product = await UploadService.Upload(file);
+
+            //pass in the obj created
+            return View();
         }
     }
 }

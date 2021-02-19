@@ -13,8 +13,6 @@ namespace InterGalacticEcomm.Models.Interface
         public Task UpdateProduct(int Id, Product product);
         public Task DeleteProduct(int Id);
 
-
-
         public Task CreateCategory(Category category);
         public Task<Category> GetCategory(int Id);
         public Task AddProductToCategory(int categoryId, int productId);

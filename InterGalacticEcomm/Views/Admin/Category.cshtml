@@ -27,7 +27,7 @@
             <span>Description</span>
             <input asp-for="@Model.Category.Description" />
 
-            <input asp-for="@Model.Category.Id" />
+            <input type="hidden" asp-for="@Model.Category.Id" />
 
 
             <input type="submit" value="Update" />
@@ -43,15 +43,14 @@
     <form asp-controller="Admin" method="post" asp-action="AddProductToCategory" runat="server">
         <label>
 
-            <input asp-for="@Model.Category.Id" />
-
-            <select name="Product" id="productSelect">
+            <select>
                 @foreach (var item in @Model.Product)
                 {
                     <option value="@item.Id">@item.Name</option>
                 }
+            </select>
 
-            </select> 
+            <input type="hidden" asp-for="@Model.Category.Id" />
 
         </label>
             <asp:Button Text="Submit" runat"server" OnClick="Submit" />

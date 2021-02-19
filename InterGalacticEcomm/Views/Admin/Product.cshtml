@@ -1,13 +1,36 @@
 ﻿@model InterGalacticEcomm.Models.Product
 
 <h1>Here is your product details page.</h1>
+<ul>
+    <li>
+        @Model.Name
+    </li>
+    <li>
+        @Model.Price
+    </li>
+    <li>
+        @Model.Description
+    </li>
+</ul>
 
-<p>@Model.Name -- @Model.Price -- @Model.Description</p>
-
-
+@if (@Model.URL != null)
+{
+    <img src="@Model.URL" width="250">
+}
 
 @if (User.Identity.IsAuthenticated)
 {
+
+    <form asp-controller="Admin" asp-action="UpdateImage" method="post" enctype="multipart/form-data">
+        <label>
+            <input name="name"/>
+
+            <input name="file" type="file"/>
+
+            <input type="submit" value="UploadImage"/>
+        </label>
+    </form>
+
     <div asp-validation-summary="All"></div>
 
     <form asp-controller="Admin" method="post" asp-action="UpdateProduct">
