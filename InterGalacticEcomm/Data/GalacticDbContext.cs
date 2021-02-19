@@ -23,7 +23,6 @@ namespace InterGalacticEcomm.Data
 
             modelBuilder.Entity<CategoryProduct>().HasKey(x => new { x.CategoryId, x.ProductId });
 
-            //seedRole stuff can go here.
             SeedRole(modelBuilder, "Admin", "read", "create", "update", "delete");
             SeedRole(modelBuilder, "Guest", "read");
 
@@ -46,8 +45,6 @@ namespace InterGalacticEcomm.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryProduct> CategoryProducts { get; set; }
 
-
-        //put the seed role stuff here
         private int id = 1;
         private void SeedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)
         {
@@ -69,7 +66,6 @@ namespace InterGalacticEcomm.Data
                    ClaimValue = permission
                });
             modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(roleClaims);
-            //claim type comes from startup seed method call, line 90ish
         }
     }
 
