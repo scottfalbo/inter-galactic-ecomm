@@ -11,21 +11,23 @@ namespace InterGalacticEcomm.Models.Interface.Services
 {
     public interface IUploadService
     {
-        Task<Product> Upload(IFormFile file);
+        Task<Product> Upload(IFormFile file, int Id);
     }
 
     public class UploadService : IUploadService
     {
         //dep injection
         public IConfiguration Configuration { get; }
-        public UploadService(IConfiguration config)
+        public IAdmin _admin;
+        public UploadService(IConfiguration config, IAdmin admin)
         {
             Configuration = config;
+            _admin = admin;
         }
         //end dep injec
-        public async Task<Product> Upload(IFormFile file)
+        public async Task<Product> Upload(IFormFile file, int Id)
         {
-            BlobContainerClient container = new BlobContainerClient(Configuration.GetConnectionString("StorageAccount"), "images");
+            BlobContainerClient container = new BlobContainerClient(Configuration.GetConnectionString("ImageStuff"), "images");
 
             await container.CreateIfNotExistsAsync();
 
@@ -43,11 +45,11 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 await blob.UploadAsync(stream, options);
             }
 
-            Product product = new Product()
-            {
-                Name = file.FileName,
-                URL = blob.Uri.ToString()
-            };
+            Product product = await _admin.GetProduct(Id);
+            product.URL = blob.Uri.ToString();
+            await _admin.UpdateProduct(Id, product);
+
+
             return product;
         }
     }

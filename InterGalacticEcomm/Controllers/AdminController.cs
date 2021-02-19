@@ -16,16 +16,12 @@ namespace InterGalacticEcomm.Controllers
 {
     public class AdminController : Controller
     {
-        //public IUploadService UploadService { get; }
-        //public AdminController(IUploadService service)
-        //{
-            //UploadService = service;
-        //}
-
+        public IUploadService UploadService { get; set; }
         private readonly IAdmin _admin;
-        public AdminController(IAdmin admin)
+        public AdminController(IAdmin admin, IUploadService service)
         {
             _admin = admin;
+            UploadService = service;
         }
 
         public async Task<IActionResult> Index()
@@ -150,15 +146,22 @@ namespace InterGalacticEcomm.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> AddProductToCategory(int categoryId)
+        public async Task<IActionResult> AddProductToCategory(int categoryId, int productId)
         {
-            var productId = Convert.ToInt32(Request.Form["Product"]);
-            //int prodId = ProductId.Value;
+            
             await _admin.AddProductToCategory(categoryId, productId);
-            return Redirect("/Admin/Category");
+            return Redirect("/Admin/Categories");
         }
 
         [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveProductFromCategory(int categoryId, int productId)
+        {
+            await _admin.RemoveProductFromCategory(categoryId, productId);
+            return Redirect("/Admin/Categories");
+        }
+
+        [HttpPost("/Admin/Category/{Id}")]
         //[Authorize]
         //[Authorize(Roles = "Admin")]
         [AllowAnonymous]
@@ -175,18 +178,17 @@ namespace InterGalacticEcomm.Controllers
         public async Task<IActionResult> DeleteProduct(int Id)
         {
             await _admin.DeleteProduct(Id);
-
             return Redirect("/Admin/Products");
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateImage(IFormFile file)
+        public async Task<IActionResult> UpdateImage(IFormFile file, int Id)
         {
-            //Product product = await UploadService.Upload(file);
+            await UploadService.Upload(file, Id);
 
             //pass in the obj created
-            return View();
+            return Redirect("/Admin/Products");
         }
     }
 }
