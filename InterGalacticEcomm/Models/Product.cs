@@ -10,16 +10,10 @@ namespace InterGalacticEcomm.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-
         [Column(TypeName = "decimal(6,2)")]
         public decimal Price { get; set; }
         public string Description { get; set; }
         public Category Category { get; set; }
-
         public string URL {get;set;}
-
-        //resource group, add storage container(search bar)
-        //name the container images
-
     }
 }

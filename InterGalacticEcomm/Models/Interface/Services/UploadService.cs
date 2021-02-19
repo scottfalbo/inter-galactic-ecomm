@@ -16,7 +16,6 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
     public class UploadService : IUploadService
     {
-        //dep injection
         public IConfiguration Configuration { get; }
         public IAdmin _admin;
         public UploadService(IConfiguration config, IAdmin admin)
@@ -24,7 +23,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
             Configuration = config;
             _admin = admin;
         }
-        //end dep injec
+        /// <summary>
+        /// Uploads an image to azure dev-ops. ALSO, gets a product by ID, sets the new URL, then updates it.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="Id"></param>
+        /// <returns>returns a product</returns>
         public async Task<Product> Upload(IFormFile file, int Id)
         {
             BlobContainerClient container = new BlobContainerClient(Configuration.GetConnectionString("ImageStuff"), "images");

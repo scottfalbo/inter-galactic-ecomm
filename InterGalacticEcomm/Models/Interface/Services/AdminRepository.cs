@@ -14,7 +14,11 @@ namespace InterGalacticEcomm.Models.Interface.Services
         {
             _context = context;
         }
-
+        /// <summary>
+        /// Creates a category
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns>no return</returns>
         public async Task CreateCategory(Category category)
         {
             Category cat = new Category()
@@ -27,6 +31,11 @@ namespace InterGalacticEcomm.Models.Interface.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Creates a product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>no return</returns>
         public async Task CreateProduct(Product product)
         {
             Product prod = new Product()
@@ -41,6 +50,11 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
             await _context.SaveChangesAsync();
         }
+        /// <summary>
+        /// Gets a single category by Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>returns category by ID</returns>
         public async Task<Category> GetCategory(int Id)
         {
             return await _context.Categories
@@ -55,7 +69,11 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 })
                 .FirstOrDefaultAsync();
         }
-
+        /// <summary>
+        /// Gets a single product by ID
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>single product by ID</returns>
         public async Task<Product> GetProduct(int Id)
         {
             return await _context.Products
@@ -70,6 +88,10 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 })
                 .FirstOrDefaultAsync();
         }
+        /// <summary>
+        /// Gets the entire list of categories
+        /// </summary>
+        /// <returns>list of categories</returns>
         public async Task<List<Category>> GetCategories()
         {
             return await _context.Categories
@@ -82,7 +104,10 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 })
                 .ToListAsync();
         }
-
+        /// <summary>
+        /// List of all the products
+        /// </summary>
+        /// <returns>list of products</returns>
         public async Task<List<Product>> GetProducts()
         {
             return await _context.Products
@@ -97,8 +122,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 })
                 .ToListAsync();
         }
-
-        //TODO: This is where shit breaks
+        /// <summary>
+        /// Adds a product to a category by their ID's
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="productId"></param>
+        /// <returns>no return</returns>
         public async Task AddProductToCategory(int categoryId, int productId)
         {
 
@@ -112,6 +141,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Removes a product from a category by their ID's
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="productId"></param>
+        /// <returns>no return</returns>
         public async Task RemoveProductFromCategory(int categoryId, int productId)
         {
             var categoryProduct = await _context.CategoryProducts.FirstOrDefaultAsync(x => x.CategoryId == categoryId && x.ProductId == productId);
@@ -119,7 +154,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
             await _context.SaveChangesAsync();
         }
-
+        /// <summary>
+        /// Updates a category by ID
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="category"></param>
+        /// <returns>no return</returns>
         public async Task UpdateCategory(int Id, Category category)
         {
             Category cat = new Category()
@@ -132,6 +172,12 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
             await _context.SaveChangesAsync();
         }
+        /// <summary>
+        /// Updates a product by its ID
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="product"></param>
+        /// <returns>no return</returns>
         public async Task UpdateProduct(int Id, Product product)
         {
             Product prod = new Product()
@@ -147,18 +193,23 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
             await _context.SaveChangesAsync();
         }
-
+        /// <summary>
+        /// Deletes a category by its ID
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>no return</returns>
         public async Task DeleteCategory(int Id)
         {
-            //ID = 0
             Category cat = await _context.Categories.FindAsync(Id);
-
-            //throw new Exception("Broke " + Id);
             _context.Entry(cat).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();
         }
-
+        /// <summary>
+        /// Deletes a product by ID
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>no return</returns>
         public async Task DeleteProduct(int Id)
         {
             Product product = await _context.Products.FindAsync(Id);

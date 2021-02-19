@@ -78,8 +78,6 @@ namespace InterGalacticEcomm.Controllers
             return View(product);
         }
 
-
-        //We don't need Products() at the moment. We are basically using this in our category.cshtml
         [HttpGet]
         public async Task<IActionResult> Products()
         {
@@ -95,12 +93,12 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
-        //[Authorize(Roles = "Admin")]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Category(Category category)
         {
             await _admin.CreateCategory(category);
-            //Category newCat = await _admin.GetCategory(category.Id);
+            Category newCat = await _admin.GetCategory(category.Id);
             if (!ModelState.IsValid)
             {
                 return View(category);
@@ -110,12 +108,12 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
-        //[Authorize(Roles = "Admin")]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Product(Product product)
         {
             await _admin.CreateProduct(product);
-            //Product newProd = await _admin.GetProduct(product.Id);
+            Product newProd = await _admin.GetProduct(product.Id);
             if (!ModelState.IsValid)
             {
                 return View(product);
@@ -125,9 +123,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCategory(Category category)
         {
             await _admin.UpdateCategory(category.Id, category);
@@ -135,9 +132,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
-        //[Authorize(Roles = "Admin")]
-        //[AllowAnonymous]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(Product product)
         {
             await _admin.UpdateProduct(product.Id, product);
@@ -145,7 +141,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddProductToCategory(int categoryId, int productId)
         {
             
@@ -154,7 +151,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RemoveProductFromCategory(int categoryId, int productId)
         {
             await _admin.RemoveProductFromCategory(categoryId, productId);
@@ -162,9 +160,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost("/Admin/Category/{Id}")]
-        //[Authorize]
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCategory(int Id)
         {
             await _admin.DeleteCategory(Id);
@@ -172,9 +169,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int Id)
         {
             await _admin.DeleteProduct(Id);
@@ -182,12 +178,11 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateImage(IFormFile file, int Id)
         {
             await UploadService.Upload(file, Id);
-
-            //pass in the obj created
             return Redirect("/Admin/Products");
         }
     }

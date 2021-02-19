@@ -1,6 +1,6 @@
 ﻿@model InterGalacticEcomm.Models.CategoryListVM
 
-@if (User.Identity.IsAuthenticated)
+@if (User.IsInRole("Admin"))
 {
     <form asp-controller="Admin" method="post" asp-action="category">
         <label>
