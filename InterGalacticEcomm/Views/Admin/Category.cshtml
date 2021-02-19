@@ -14,7 +14,7 @@
     }
 </ul>
 
-@if (User.Identity.IsAuthenticated)
+@if (User.IsInRole("Admin"))
 {
 
     <p>Update a Category</p>
@@ -58,10 +58,10 @@
     <form asp-controller="Admin" method="post" asp-action="RemoveProductFromCategory">
         <label>
 
-            <select name="productId" >
-                @foreach (var item in @Model.Product)
+            <select name="productId">
+                @foreach (var item in @Model.Category.CategoryProducts)
                 {
-                    <option value="@item.Id">@item.Name</option>
+                    <option value="@item.Product.Id">@item.Product.Name</option>
                 }
             </select>
 

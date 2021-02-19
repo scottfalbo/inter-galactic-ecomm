@@ -10,7 +10,6 @@ namespace InterGalacticEcomm.Models.API
     {
         public string Id { get; set; }
         public string UserName { get; set; }
-
         public IList<string> Roles { get; set; }
     }
 }

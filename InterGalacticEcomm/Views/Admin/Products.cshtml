@@ -1,7 +1,7 @@
 ﻿@model InterGalacticEcomm.Models.ProductListVM
 
 
-@if (User.Identity.IsAuthenticated)
+@if (User.IsInRole("Admin"))
 {
     <form asp-controller="Admin" method="post" asp-action="product">
         <label>
