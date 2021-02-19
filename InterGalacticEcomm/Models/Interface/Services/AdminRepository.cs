@@ -45,6 +45,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
         {
             return await _context.Categories
                 .Where(x => x.Id == Id)
+                .Include(q => q.CategoryProducts)
+                .ThenInclude(a => a.Product)
                 .Select(z => new Category
                 {
                     CategoryName = z.CategoryName,
@@ -103,7 +105,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
             CategoryProduct categoryProduct = new CategoryProduct()
             {
                 ProductId = productId,
-                CategoryId = categoryId,
+                CategoryId = categoryId
             };
             _context.Entry(categoryProduct).State = EntityState.Added;
 
@@ -148,7 +150,10 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
         public async Task DeleteCategory(int Id)
         {
+            //ID = 0
             Category cat = await _context.Categories.FindAsync(Id);
+
+            //throw new Exception("Broke " + Id);
             _context.Entry(cat).State = EntityState.Deleted;
 
             await _context.SaveChangesAsync();

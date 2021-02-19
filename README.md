@@ -9,9 +9,11 @@ Scott Falbo | Matthew Petersen
 ---
 
 ## Overview:
-We are in the process of creating an E-commerce website. Users will be able to register and login with a username and password. When a user is registered an access_token is generated and is used to authenticate+authorize the user to login.
+We are in the process of creating an E-commerce website. Users will be able to register and login with a username and password, and then login. 
+If a user is logged in as an Admin, the user is able to perform CRUD operations on the Products and Categories (Temporarily disabled for development purposes).
 
-At the moment we are using a HomeController with mock data to test that our front-end is able to pull some easy information.
+
+
 
 ---
 
@@ -29,7 +31,7 @@ At the moment we are using a HomeController with mock data to test that our fron
 
 ## Architecture
 
-  <img src = "https://img.shields.io/badge/C%23%20-%23239120.svg?style=flat&logo=c%2B%2B&logoColor=ffffff">
+  <img src ="https://img.shields.io/badge/C%23%20-%23239120.svg?style=flat&logo=c%2B%2B&logoColor=ffffff">
   <img src="https://img.shields.io/badge/.NET Core-net%23239120.svg?style=flat&logo=dot-net&logoColor=00c8ff">
   <img src="https://img.shields.io/badge/Azure%20-%230072C6.svg?style=flat&logo=azure-devops&logoColor=00c8ff">
 
@@ -37,6 +39,7 @@ This is an ASP.Net Core App built in an MVC framework, that utilizes Microsoft F
 
 Product and Category data is stored in a SQL database using NewtonSoftJson to parse the json.
 
+CategoryProduct is a join table which connects Products to Categories
 
 
 ## ERD
@@ -47,7 +50,7 @@ Product and Category data is stored in a SQL database using NewtonSoftJson to pa
 + *02/16/2021* - Brought in Identity dependencies.
 + Created user roles and policies.  Added permissions to routes.
 + Made forms for registering a user, and then subsequently logging in as that user.
-
++ *02/18/2021* - Added blobs so users can add/update images to products. Fixed all CRUD routes. Products can now be added to categories.
 ---
 
 ## Attribution
