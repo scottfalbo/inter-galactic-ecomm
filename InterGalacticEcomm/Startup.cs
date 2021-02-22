@@ -19,6 +19,18 @@ using System.Threading.Tasks;
 
 namespace InterGalacticEcomm
 {
+    //TODO:
+    /*
+     * Make a cart model, List<Product> + int totalPrice
+     * CRUD for cart
+     *  - ICart + CartService
+     *  - Add item (from form on product page), Get items(cart page), Delete item(int Id)
+     * 
+     * Razor Page for:
+     *  - Add to cart button
+     *  - Post route that gets a Product by Id and adds to cart
+     */
+
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -57,7 +69,10 @@ namespace InterGalacticEcomm
             services.AddTransient<IAdmin, AdminRepository>();
             services.AddTransient<IUploadService, UploadService>();
 
-            services.AddMvc();
+            services.AddMvc().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AddPageRoute("/Home/Index", "");
+            });
             services.AddControllers();
         }
 
@@ -76,6 +91,7 @@ namespace InterGalacticEcomm
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
             });
         }
