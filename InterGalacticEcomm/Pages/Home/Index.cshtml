@@ -1,0 +1,21 @@
+﻿@page
+@model InterGalacticEcomm.Pages.Home.IndexModel
+@{
+}
+
+<h1>Welcome to InterGalactic E-comm</h1>
+
+<a asp-page="/home/register">Register</a>
+<br />
+<a asp-page="/home/login">Login</a>
+
+<h2>Here is a list of our current Product Categories</h2>
+<ul>
+    @foreach (var item in Model.CategoryList)
+    {
+        <li>
+            <a asp-page="/Home/Category" asp-route-Id="@item.Id">@item.CategoryName</a>
+        </li>
+    }
+
+</ul>

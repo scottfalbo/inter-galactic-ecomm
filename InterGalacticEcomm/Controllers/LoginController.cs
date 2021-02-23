@@ -48,7 +48,7 @@ namespace InterGalacticEcomm.Controllers
             return View();
         }
 
-        /// <summary>
+        /// <summary> 
         /// Authentication route for the login screen
         /// </summary>
         /// <param name="data"> LoginData object with username and password from form </param>

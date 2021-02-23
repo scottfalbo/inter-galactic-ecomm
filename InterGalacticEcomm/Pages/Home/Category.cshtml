@@ -1,0 +1,15 @@
+﻿@page
+@model InterGalacticEcomm.Pages.Home.CategoryModel
+@{
+}
+
+<h1>Here is a list of Products in that @Model.CategoryName</h1>
+
+<ul>
+    @foreach (var item in Model.CategoryProductList)
+    {
+        <li>
+            <a asp-page="/Home/Product" asp-route-Id="@item.ProductId">@item.Product.Name</a>
+        </li>
+    }
+</ul>
