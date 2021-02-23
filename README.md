@@ -19,8 +19,6 @@ Users are able to register and login with a simple username and password.
 If a user is logged in as an **Admin**, the user is able to perform CRUD operations on the Products and Categories. This is enforced by a Policy to ensure that guests aren't tampering with our website.
 
 
-
-
 ---
 
 ## Getting Started
@@ -58,6 +56,7 @@ CategoryProduct is a join table which connects Products to Categories
 + Made forms for registering a user, and then subsequently logging in as that user.
 + *02/18/2021* - Added blobs so users can add/update images to products. Fixed all CRUD routes. Products can now be added to categories.
 + *02/19/2021* - Deployed web app, added summary comments, fixed CRUD operations so only an Admin can view the forms.
++ *02/22/2021* - Added razor pages for user interaction. All routes operational. Admin routes are all locked down.
 ---
 
 ## Attribution
