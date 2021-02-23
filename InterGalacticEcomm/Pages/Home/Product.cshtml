@@ -1,0 +1,20 @@
+﻿@page
+@model InterGalacticEcomm.Pages.Home.ProductModel
+@{
+}
+
+
+<h1>Here is your product details for : @Model.Name</h1>
+<ul>
+    <li>
+        @Model.Price
+    </li>
+    <li>
+        @Model.Description
+    </li>
+</ul>
+
+@if (@Model.URL != null)
+{
+    <img src="@Model.URL" width="250">
+}

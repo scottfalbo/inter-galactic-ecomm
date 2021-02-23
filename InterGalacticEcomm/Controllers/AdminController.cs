@@ -16,6 +16,7 @@ namespace InterGalacticEcomm.Controllers
 {
     public class AdminController : Controller
     {
+
         public IUploadService UploadService { get; set; }
         private readonly IAdmin _admin;
         public AdminController(IAdmin admin, IUploadService service)
@@ -24,6 +25,8 @@ namespace InterGalacticEcomm.Controllers
             UploadService = service;
         }
 
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var categories = await _admin.GetCategories();
@@ -31,6 +34,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Category(int Id)
         {
             var category = await _admin.GetCategory(Id);
@@ -53,6 +58,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Categories()
         {
             var categories = await _admin.GetCategories();
@@ -67,6 +74,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Product(int Id)
         {
             var product = await _admin.GetProduct(Id);
@@ -79,6 +88,8 @@ namespace InterGalacticEcomm.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Products()
         {
             var products = await _admin.GetProducts();
