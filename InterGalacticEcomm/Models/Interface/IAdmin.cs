@@ -20,5 +20,11 @@ namespace InterGalacticEcomm.Models.Interface
         public Task<List<Category>> GetCategories();
         public Task UpdateCategory(int Id, Category category);
         public Task DeleteCategory(int Id);
+
+        public Task AddProductToCart(int cartId, int productId);
+
+        public Task RemoveProductFromCart(int cartId, int productId);
+
+        public Task<Cart> GetCart(string Id);
     }
 }
