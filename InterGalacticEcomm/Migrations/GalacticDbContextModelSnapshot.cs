@@ -84,6 +84,46 @@ namespace InterGalacticEcomm.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("InterGalacticEcomm.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Paid")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Recieved")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Shipped")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("InterGalacticEcomm.Models.CartProducts", b =>
+                {
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartId", "ProductId");
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.ToTable("CartProducts");
+                });
+
             modelBuilder.Entity("InterGalacticEcomm.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -135,6 +175,23 @@ namespace InterGalacticEcomm.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("CategoryProducts");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            ProductId = 2
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            ProductId = 3
+                        });
                 });
 
             modelBuilder.Entity("InterGalacticEcomm.Models.Product", b =>
@@ -385,6 +442,21 @@ namespace InterGalacticEcomm.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("InterGalacticEcomm.Models.CartProducts", b =>
+                {
+                    b.HasOne("InterGalacticEcomm.Models.Cart", "Cart")
+                        .WithMany("CartProducts")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InterGalacticEcomm.Models.Product", "Product")
+                        .WithOne("CartProducts")
+                        .HasForeignKey("InterGalacticEcomm.Models.CartProducts", "ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("InterGalacticEcomm.Models.CategoryProduct", b =>

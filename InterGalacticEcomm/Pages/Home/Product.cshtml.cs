@@ -4,13 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using InterGalacticEcomm.Models.Interface;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace InterGalacticEcomm.Pages.Home
 {
     public class ProductModel : PageModel
-    {
+    { 
+          
         public IAdmin _context;
         public ProductModel(IAdmin context)
         {
@@ -19,7 +21,7 @@ namespace InterGalacticEcomm.Pages.Home
 
         public int Id;
         public string Name { get; set; }
-        [Column(TypeName="decimal(6,2)")]
+        [Column(TypeName = "decimal(6,2)")]
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string URL { get; set; }
@@ -31,7 +33,18 @@ namespace InterGalacticEcomm.Pages.Home
             Price = product.Price;
             URL = product.URL;
             Description = product.Description;
-
         }
+
+        public async Task<IActionResult> OnPostAsync(int Id)
+        {
+            //var user = User.Claims.First(x => x.Type == "Id").Value;
+            string id = HttpContext.Request.Cookies["user id"];
+            var cart = await _context.GetCart(id);
+            await _context.AddProductToCart(cart.Id, Id);
+
+            return Redirect("/Home/ShoppingCart");
+        }
+
+
     }
 }

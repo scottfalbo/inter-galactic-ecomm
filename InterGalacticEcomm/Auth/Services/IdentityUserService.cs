@@ -1,6 +1,9 @@
-﻿using InterGalacticEcomm.Models.API;
+﻿using InterGalacticEcomm.Data;
+using InterGalacticEcomm.Models.API;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +16,13 @@ namespace InterGalacticEcomm.Models.Interface.Services
     {
         private readonly UserManager<AppUser> UserManager;
         private readonly SignInManager<AppUser> signInManager;
+        private readonly GalacticDbContext _context;
 
-        public IdentityUserService(UserManager<AppUser> registerUser, SignInManager<AppUser> sim)
+        public IdentityUserService(UserManager<AppUser> registerUser, SignInManager<AppUser> sim, GalacticDbContext context)
         {
             UserManager = registerUser;
             signInManager = sim;
+            _context = context;
         }
 
         /// <summary>
@@ -35,15 +40,16 @@ namespace InterGalacticEcomm.Models.Interface.Services
             };
             var result = await UserManager.CreateAsync(user, data.Password);
 
+
             if (result.Succeeded)
             {
-
+                var cart = await CreateCart(user.Id);
                 await UserManager.AddToRolesAsync(user, new List<string>() { "Guest" });
 
                 return new AppUserDTO
                 {
                     UserName = user.UserName,
-                    Roles = new List<string>() { "Guest" }
+                    Roles = new List<string>() { "Guest" },
                 };
             }
             return new AppUserDTO();
@@ -62,11 +68,13 @@ namespace InterGalacticEcomm.Models.Interface.Services
             if (result.Succeeded)
             {
                 var user = await UserManager.FindByNameAsync(userName);
+
+
                 return new AppUserDTO
                 {
                     Id = user.Id,
                     UserName = user.UserName,
-                    Roles = await UserManager.GetRolesAsync(user)
+                    Roles = await UserManager.GetRolesAsync(user),
                 };
             }
             throw new Exception("womp womp");
@@ -86,6 +94,23 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 UserName = user.UserName,
                 Roles = await UserManager.GetRolesAsync(user)
             };
+        }
+
+        /// <summary>
+        /// Make a new a cart when user registers
+        /// </summary>
+        /// <param name="Id"> user Id</param>
+        /// <returns> Cart object </returns>
+        public async Task<Cart> CreateCart(string Id)
+        {
+            Cart cart = new Cart()
+            {
+                UserId = Id,
+                CartProducts = new List<CartProducts>()
+            };
+            _context.Entry(cart).State = EntityState.Added;
+            await _context.SaveChangesAsync();
+            return cart;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id}"
 @model InterGalacticEcomm.Pages.Home.ProductModel
 @{
 }
@@ -17,4 +17,12 @@
 @if (@Model.URL != null)
 {
     <img src="@Model.URL" width="250">
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form method="post">
+        <input asp-for="@Model.Id" type="hidden" />
+        <input type="submit" value="add to cart" />
+    </form>
 }

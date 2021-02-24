@@ -1,0 +1,16 @@
+﻿@page
+@model InterGalacticEcomm.Pages.Home.ShoppingCartModel
+@{
+}
+
+<h1>Shopping Cart</h1>
+<h2>@Model.UserName</h2>
+
+<ul>
+@foreach (var item in @Model.CartProducts)
+{
+    <li>
+        <a asp-page="/Home/Product" asp-route-Id="@item.ProductId">@item.Product.Name</a>
+    </li>
+}
+</ul>

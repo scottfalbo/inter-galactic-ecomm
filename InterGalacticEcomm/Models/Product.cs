@@ -15,5 +15,7 @@ namespace InterGalacticEcomm.Models
         public string Description { get; set; }
         public Category Category { get; set; }
         public string URL {get;set;}
+
+        public CartProducts CartProducts { get; set; }
     }
 }

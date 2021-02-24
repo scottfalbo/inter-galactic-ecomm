@@ -217,5 +217,57 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
             await _context.SaveChangesAsync();
         }
+
+        /// <summary>
+        /// Add a product to a cart by creating a CartProduct object
+        /// </summary>
+        /// <param name="cartId">  cart Id </param>
+        /// <param name="productId"> product Id </param>
+        /// <returns></returns>
+
+        public async Task AddProductToCart(int cartId, int productId)
+        {
+            CartProducts cartProduct = new CartProducts()
+            {
+                ProductId = productId,
+                CartId = cartId
+            };
+            _context.Entry(cartProduct).State = EntityState.Added;
+
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Remove a product from a users cart
+        /// </summary>
+        /// <param name="cartId"> cart Id </param>
+        /// <param name="productId"> product Id </param>
+        /// <returns></returns>
+        public async Task RemoveProductFromCart(int cartId, int productId)
+        {
+            var cartProduct = await _context.CartProducts.FirstOrDefaultAsync(x => x.CartId == cartId && x.ProductId == productId);
+            _context.Entry(cartProduct).State = EntityState.Deleted;
+
+            await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Get the user's cart object from DB
+        /// </summary>
+        /// <param name="Id"> cart Id </param>
+        /// <returns></returns>
+        public async Task<Cart> GetCart(string Id)
+        {
+            return await _context.Carts
+                 .Where(x => x.UserId == Id)
+                 .Include(x => x.CartProducts)
+                 .ThenInclude(x => x.Product)
+                 .Select(x => new Cart
+                 {
+                     Id = x.Id,
+                     UserId = x.UserId,
+                     CartProducts = x.CartProducts
+                 }).FirstOrDefaultAsync();
+        }
     }
 }

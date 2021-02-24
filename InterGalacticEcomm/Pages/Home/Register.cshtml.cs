@@ -34,7 +34,9 @@ namespace InterGalacticEcomm.Pages.Home
                 Password = Password
             };
 
-            await service.Register(newUser, this.ModelState);
+            var user = await service.Register(newUser, this.ModelState);
+
+
             return Redirect("/Home/Login");
         }
     }
