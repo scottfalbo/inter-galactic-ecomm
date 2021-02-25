@@ -1,16 +1,15 @@
 ﻿@page
 @model InterGalacticEcomm.Pages.Home.IndexModel
-@{
-}
+@{ }
 
-<h1>Welcome to InterGalactic E-comm</h1>
+<h1 style="text-align:center">Welcome to InterGalactic E-comm</h1>
 
-<a asp-page="/home/register">Register</a>
-<br />
-<a asp-page="/home/login">Login</a>
 
-<h2>Here is a list of our current Product Categories</h2>
+<p>Here is a list of our current Product Categories</p>
 <ul>
+    @*
+        Each categroy can be put in a card/div to display neatly. See (MyGrdn). Check what version of bootstrap this is.
+    *@
     @foreach (var item in Model.CategoryList)
     {
         <li>
@@ -19,3 +18,10 @@
     }
 
 </ul>
+
+
+@if (User.IsInRole("Admin"))
+{
+    <p style="font-weight:bold;">Administrator permissions:</p>
+    <a href="/admin/index">Admin Panel</a>
+}

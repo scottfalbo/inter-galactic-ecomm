@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using InterGalacticEcomm.Models;
+using InterGalacticEcomm.Models.Interface;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +11,23 @@ namespace InterGalacticEcomm.Components
     [ViewComponent]
     public class ShoppingCartViewComponent : ViewComponent
     {
+        private readonly IAdmin admin;
+        public ShoppingCartViewComponent(IAdmin Admin)
+        {
+            admin = Admin;
+        }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            string cartCount = HttpContext.Request.Cookies["CartCount"];
+            string UserId = HttpContext.Request.Cookies["user Id"];
+            Cart cart = await admin.GetCart(UserId);
 
-            ViewModel cart = new ViewModel()
-            { 
-                CartCount = Convert.ToInt32(cartCount)
+            ViewModel VM = new ViewModel()
+            {
+                CartCount = cart.CartProducts.Count()
             };
 
-            return View(cart);
+            return View(VM);
         }
 
         public class ViewModel 

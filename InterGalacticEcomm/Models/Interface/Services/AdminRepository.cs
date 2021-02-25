@@ -269,5 +269,42 @@ namespace InterGalacticEcomm.Models.Interface.Services
                      CartProducts = x.CartProducts
                  }).FirstOrDefaultAsync();
         }
+
+        public async Task CreateOrder(Cart cart)
+        {
+            Order order = new Order()
+            {
+                Cart = cart,
+                Paid = false,
+                Recieved = true,
+                Shipped = false,
+                UserId = cart.UserId
+            };
+            _context.Entry(order).State = EntityState.Added;
+
+            await _context.SaveChangesAsync();
+
+            //Order newOrder = await _context.GetOrder();
+        }
+
+        public async Task<Order> GetOrder(string Id)
+        {
+            return await _context.Orders
+                .Where(x => x.UserId == Id)
+                .Include(x => x.Cart)
+                .ThenInclude(x => x.CartProducts)
+                .ThenInclude(x => x.Product)
+                .Select(z => new Order
+                {
+                    Id = z.Id,
+                    Cart = z.Cart,
+                    Paid = false,
+                    Recieved = true,
+                    Shipped = false,
+                    UserId = z.UserId
+                })
+                .FirstOrDefaultAsync();
+        }
+
     }
 }

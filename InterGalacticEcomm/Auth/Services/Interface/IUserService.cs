@@ -13,5 +13,7 @@ namespace InterGalacticEcomm.Models.Interface
         Task<AppUserDTO> Register(RegisterUser data, ModelStateDictionary modelState);
 
         Task<AppUserDTO> Authenticate(string userName, string password);
+
+
     }
 }

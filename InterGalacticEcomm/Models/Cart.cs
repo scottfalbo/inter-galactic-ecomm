@@ -13,9 +13,5 @@ namespace InterGalacticEcomm.Models
         public string UserId { get; set; } 
         [BindProperty]
         public List<CartProducts> CartProducts { get; set; }
-
-        public bool Shipped { get; set; }
-        public bool Recieved { get; set; }
-        public bool Paid { get; set; }
     }
 }

@@ -1,0 +1,26 @@
+﻿@page
+@model InterGalacticEcomm.Pages.Home.CheckoutModel
+@{
+}
+
+
+<h1>Checkout page</h1>
+
+<ul>
+    @foreach (var item in Model.Cart.CartProducts)
+    {
+        <li>
+            <p>@item.Product.Name</p>
+        </li>
+        <li>
+            <p>@item.Product.Description</p>
+        </li>
+        <li>
+            <p>@item.Product.Price</p>
+        </li>
+    }
+</ul>
+
+<h1>Your total is: @Model.TotalPrice</h1>
+
+<button>Buy your shit</button>
