@@ -63,7 +63,7 @@ namespace InterGalacticEcomm.Data
         public DbSet<CategoryProduct> CategoryProducts { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartProducts> CartProducts { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
 
         private int id = 1;
         private void SeedRole(ModelBuilder modelBuilder, string roleName, params string[] permissions)

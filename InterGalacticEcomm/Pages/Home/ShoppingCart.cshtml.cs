@@ -20,8 +20,8 @@ namespace InterGalacticEcomm.Pages.Home
         public string UserName { get; set; }
         public List<CartProducts> CartProducts { get; set; }
         public int Id { get; set; }
-
-
+        [BindProperty]
+        public int ProductId { get; set; }
         public async Task OnGet()
         {
             string user = HttpContext.Request.Cookies["user name"];
@@ -29,6 +29,24 @@ namespace InterGalacticEcomm.Pages.Home
             UserName = user;
             var cart = await _context.GetCart(id);
             CartProducts = cart.CartProducts;
+        }
+
+        public async Task<IActionResult> OnPostDelete()
+        {
+            int productId = ProductId;
+            string id = HttpContext.Request.Cookies["user id"];
+            var cart = await _context.GetCart(id);
+            await _context.RemoveProductFromCart(cart.Id, productId);
+            return Redirect("/Home/ShoppingCart");
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            string id = HttpContext.Request.Cookies["user id"];
+            var cart = await _context.GetCart(id);
+
+            await _context.CreateOrder(cart);
+            return Redirect("/Home/Checkout");
         }
     }
 

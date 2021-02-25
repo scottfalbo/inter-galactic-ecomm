@@ -22,9 +22,10 @@ namespace InterGalacticEcomm.Models.Interface
         public Task DeleteCategory(int Id);
 
         public Task AddProductToCart(int cartId, int productId);
-
         public Task RemoveProductFromCart(int cartId, int productId);
-
         public Task<Cart> GetCart(string Id);
+
+        public Task CreateOrder(Cart cart);
+        public Task<Order> GetOrder(string Id);
     }
 }

@@ -2,7 +2,7 @@
 
 @if (User.IsInRole("Admin"))
     {
-    <h1>Here is the Admin/Index page</h1>
+    <h1>Here is the Admin page</h1>
 
     <ul>
         @foreach (var item in Model)
@@ -12,8 +12,4 @@
     </li>}
 
     </ul>
-
-        <p>Administrator permissions:</p>
-        <a href="/admin/products">Product</a>
-        <a href="/admin/categories">Category</a>
     }
