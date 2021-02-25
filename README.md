@@ -57,6 +57,15 @@ CategoryProduct is a join table which connects Products to Categories
 + *02/18/2021* - Added blobs so users can add/update images to products. Fixed all CRUD routes. Products can now be added to categories.
 + *02/19/2021* - Deployed web app, added summary comments, fixed CRUD operations so only an Admin can view the forms.
 + *02/22/2021* - Added razor pages for user interaction. All routes operational. Admin routes are all locked down.
++ *02/23/2021* - 
+  + Added `Cart` and `CartProduct`join table models.
+  + Created `ShoppingCart` view.
+  + Added crud to put products into the shopping cart
++ *02/24/2021* - 
+  + Added `Order` model
+  + Implemented components for the cart which tracks item count and login/logout nav.
+  + When order now button in the cart is clicked a new order is created and stored in the DB.
+  + Added some basic style here and there.
 ---
 
 ## Attribution
