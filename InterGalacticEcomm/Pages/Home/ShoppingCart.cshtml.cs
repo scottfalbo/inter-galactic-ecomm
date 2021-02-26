@@ -22,6 +22,8 @@ namespace InterGalacticEcomm.Pages.Home
         public int Id { get; set; }
         [BindProperty]
         public int ProductId { get; set; }
+        [BindProperty]
+        public int productQuantity { get; set; }
         public async Task OnGet()
         {
             string user = HttpContext.Request.Cookies["user name"];
@@ -29,6 +31,11 @@ namespace InterGalacticEcomm.Pages.Home
             UserName = user;
             var cart = await _context.GetCart(id);
             CartProducts = cart.CartProducts;
+
+            foreach (var item in cart.CartProducts)
+            {
+                productQuantity += item.Product.Quantity;
+            }
         }
 
         public async Task<IActionResult> OnPostDelete()

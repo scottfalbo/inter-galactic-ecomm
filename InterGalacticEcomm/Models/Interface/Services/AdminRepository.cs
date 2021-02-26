@@ -44,7 +44,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 Description = product.Description,
                 Price = product.Price,
                 Category = product.Category,
-                URL = product.URL
+                URL = product.URL,
+                Quantity = product.Quantity
             };
             _context.Entry(prod).State = Microsoft.EntityFrameworkCore.EntityState.Added;
 
@@ -84,7 +85,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
                     Description = z.Description,
                     Price = z.Price,
                     Category = z.Category,
-                    URL = z.URL
+                    URL = z.URL,
+                    Quantity = z.Quantity
                 })
                 .FirstOrDefaultAsync();
         }
@@ -118,7 +120,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
                     Description = z.Description,
                     Price = z.Price,
                     Category = z.Category,
-                    URL = z.URL
+                    URL = z.URL,
+                    Quantity = z.Quantity
                 })
                 .ToListAsync();
         }
@@ -187,7 +190,8 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 Description = product.Description,
                 Price = product.Price,
                 Category = product.Category,
-                URL = product.URL
+                URL = product.URL,
+                Quantity = product.Quantity
             };
             _context.Entry(prod).State = EntityState.Modified;
 

@@ -14,6 +14,8 @@ namespace InterGalacticEcomm.Pages.Home
     {
         public IAdmin _context;
         public List<Category> CategoryList { get; set; }
+        [BindProperty]
+        public string Username { get; set; }
         public IndexModel(IAdmin context)
         {
             _context = context;
@@ -21,6 +23,8 @@ namespace InterGalacticEcomm.Pages.Home
         public async Task OnGet()
         {
             //Display all the categories
+            string userName = HttpContext.Request.Cookies["user name"];
+            Username = userName;
             CategoryList = await _context.GetCategories();
         }
 

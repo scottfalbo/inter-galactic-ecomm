@@ -233,6 +233,9 @@ namespace InterGalacticEcomm.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(6,2)");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<string>("URL")
                         .HasColumnType("nvarchar(max)");
 
@@ -248,35 +251,40 @@ namespace InterGalacticEcomm.Migrations
                             Id = 1,
                             Description = "The plumbus is...well...a plumbus",
                             Name = "Plumbus",
-                            Price = 199.99m
+                            Price = 199.99m,
+                            Quantity = 0
                         },
                         new
                         {
                             Id = 2,
                             Description = "Pickles but with faces",
                             Name = "Pickle Rick",
-                            Price = 24.99m
+                            Price = 24.99m,
+                            Quantity = 0
                         },
                         new
                         {
                             Id = 3,
                             Description = "Just another Morty",
                             Name = "Morty",
-                            Price = 99.99m
+                            Price = 99.99m,
+                            Quantity = 0
                         },
                         new
                         {
                             Id = 4,
                             Description = "Practical pencil....but suspicious",
                             Name = "Pencil Vester",
-                            Price = 29.99m
+                            Price = 29.99m,
+                            Quantity = 0
                         },
                         new
                         {
                             Id = 5,
                             Description = "Rahhhhh dude",
                             Name = "Ghost-In-A-Jar",
-                            Price = 50.00m
+                            Price = 50.00m,
+                            Quantity = 0
                         });
                 });
 

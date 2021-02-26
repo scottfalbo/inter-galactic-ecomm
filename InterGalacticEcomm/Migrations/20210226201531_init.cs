@@ -212,7 +212,8 @@ namespace InterGalacticEcomm.Migrations
                     Price = table.Column<decimal>(type: "decimal(6,2)", nullable: false),
                     Description = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: true),
-                    URL = table.Column<string>(nullable: true)
+                    URL = table.Column<string>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -294,14 +295,14 @@ namespace InterGalacticEcomm.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "Description", "Name", "Price", "URL" },
+                columns: new[] { "Id", "CategoryId", "Description", "Name", "Price", "Quantity", "URL" },
                 values: new object[,]
                 {
-                    { 1, null, "The plumbus is...well...a plumbus", "Plumbus", 199.99m, null },
-                    { 2, null, "Pickles but with faces", "Pickle Rick", 24.99m, null },
-                    { 3, null, "Just another Morty", "Morty", 99.99m, null },
-                    { 4, null, "Practical pencil....but suspicious", "Pencil Vester", 29.99m, null },
-                    { 5, null, "Rahhhhh dude", "Ghost-In-A-Jar", 50.00m, null }
+                    { 1, null, "The plumbus is...well...a plumbus", "Plumbus", 199.99m, 0, null },
+                    { 2, null, "Pickles but with faces", "Pickle Rick", 24.99m, 0, null },
+                    { 3, null, "Just another Morty", "Morty", 99.99m, 0, null },
+                    { 4, null, "Practical pencil....but suspicious", "Pencil Vester", 29.99m, 0, null },
+                    { 5, null, "Rahhhhh dude", "Ghost-In-A-Jar", 50.00m, 0, null }
                 });
 
             migrationBuilder.InsertData(

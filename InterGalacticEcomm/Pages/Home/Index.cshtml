@@ -2,8 +2,14 @@
 @model InterGalacticEcomm.Pages.Home.IndexModel
 @{ }
 
-<h1 style="text-align:center">Welcome to InterGalactic E-comm</h1>
-
+@if (User.Identity.IsAuthenticated)
+{
+    <h1 style="text-align:center">Welcome to InterGalactic E-comm, @Model.Username</h1>
+}
+else
+{
+    <h1 style="text-align:center">Welcome to InterGalactic E-comm!</h1>
+}
 
 <p>Here is a list of our current Product Categories</p>
 <ul>
@@ -12,16 +18,14 @@
     *@
     @foreach (var item in Model.CategoryList)
     {
-        <li>
-            <a asp-page="/Home/Category" asp-route-Id="@item.Id">@item.CategoryName</a>
-        </li>
-    }
+<li>
+    <a asp-page="/Home/Category" asp-route-Id="@item.Id">@item.CategoryName</a>
+</li>}
 
 </ul>
 
 
 @if (User.IsInRole("Admin"))
 {
-    <p style="font-weight:bold;">Administrator permissions:</p>
-    <a href="/admin/index">Admin Panel</a>
-}
+<p style="font-weight:bold;">Administrator permissions:</p>
+                <a href="/admin/index">Admin Panel</a>}
