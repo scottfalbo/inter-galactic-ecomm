@@ -47,7 +47,7 @@ CategoryProduct is a join table which connects Products to Categories
 
 
 ## ERD
-![Whiteboard](assets/erd1.PNG)
+![Whiteboard](assets/intergalactic_erd.PNG)
 
 ### Change Log:
 + *02/15/2021* - Scaffolded out files, started working on jwt and user login. Seeded products and categories to db.
