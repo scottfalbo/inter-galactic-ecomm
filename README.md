@@ -66,6 +66,7 @@ CategoryProduct is a join table which connects Products to Categories
   + Implemented components for the cart which tracks item count and login/logout nav.
   + When order now button in the cart is clicked a new order is created and stored in the DB.
   + Added some basic style here and there.
++ *02/25/2021* - Emails are sent to the user, admin and warehouse after purchase. The users cart is also emptied after purchase.
 ---
 
 ## Attribution
