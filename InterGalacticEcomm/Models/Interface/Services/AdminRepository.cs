@@ -306,5 +306,13 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 .FirstOrDefaultAsync();
         }
 
+        public async Task EmptyCart(Cart cart)
+        {
+            cart.CartProducts = new List<CartProducts>();
+
+            _context.Entry(cart).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

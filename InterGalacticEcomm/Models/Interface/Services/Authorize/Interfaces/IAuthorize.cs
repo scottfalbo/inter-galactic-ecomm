@@ -8,6 +8,6 @@ namespace InterGalacticEcomm.Models.Interface.Services.Authorize.Interfaces
 {
     public interface IAuthorize
     {
-        public bool AuthorizeCard(CreditCard creditCard);
+        public bool AuthorizeCard(CreditCard creditCard, decimal totalPrice);
     }
 }
