@@ -229,12 +229,13 @@ namespace InterGalacticEcomm.Models.Interface.Services
         /// <param name="productId"> product Id </param>
         /// <returns></returns>
 
-        public async Task AddProductToCart(int cartId, int productId)
+        public async Task AddProductToCart(int cartId, int productId, int quantity)
         {
             CartProducts cartProduct = new CartProducts()
             {
                 ProductId = productId,
-                CartId = cartId
+                CartId = cartId,
+                Quantity = quantity + 1
             };
             _context.Entry(cartProduct).State = EntityState.Added;
 
@@ -318,5 +319,21 @@ namespace InterGalacticEcomm.Models.Interface.Services
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Order>> GetOrders()
+        {
+            return await _context.Orders
+                .Include(x => x.Cart)
+                .ThenInclude(x => x.CartProducts)
+                .ThenInclude(x => x.Product)
+                .Select(z => new Order
+                {
+                    Id = z.Id,
+                    UserId = z.UserId,
+                    Cart = z.Cart
+                })
+                .ToListAsync();
+        }
+
     }
 }

@@ -31,11 +31,6 @@ namespace InterGalacticEcomm.Pages.Home
             UserName = user;
             var cart = await _context.GetCart(id);
             CartProducts = cart.CartProducts;
-
-            foreach (var item in cart.CartProducts)
-            {
-                productQuantity += item.Product.Quantity;
-            }
         }
 
         public async Task<IActionResult> OnPostDelete()

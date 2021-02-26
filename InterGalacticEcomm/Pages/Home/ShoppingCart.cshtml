@@ -12,7 +12,7 @@
 <form asp-page-handler="delete" asp-route-Id="@item.ProductId" method="post" >
     <div>
         <a asp-page="/Home/Product" asp-route-Id="@item.ProductId">@item.Product.Name</a>
-        <input asp-for="@item.Product.Quantity"/>
+        <p>@item.Product.CartProducts.Quantity</p>
         <input type="hidden" asp-for="@Model.ProductId" value="@item.ProductId"/>
         <input type="submit" value="Remove"/>
     </div>

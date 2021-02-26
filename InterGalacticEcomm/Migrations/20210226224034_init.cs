@@ -231,7 +231,8 @@ namespace InterGalacticEcomm.Migrations
                 columns: table => new
                 {
                     CartId = table.Column<int>(nullable: false),
-                    ProductId = table.Column<int>(nullable: false)
+                    ProductId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
