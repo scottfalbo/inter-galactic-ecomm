@@ -41,6 +41,7 @@ namespace InterGalacticEcomm.Pages.Home
             cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddDays(7));
             HttpContext.Response.Cookies.Append("user Id", user.Id, cookieOptions);
             HttpContext.Response.Cookies.Append("user name", user.UserName, cookieOptions);
+            HttpContext.Response.Cookies.Append("user email", user.Email, cookieOptions);
 
             return Redirect("/Home/Index");
         }

@@ -19,23 +19,24 @@ namespace InterGalacticEcomm.Pages.Home
 
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Email { get; set; }
         public List<string> Roles { get; set; }
 
         public void OnGet()
         {
         }
 
-        public async Task<IActionResult> OnPostAsync(string Username, string Password)
+        public async Task<IActionResult> OnPostAsync(string Username, string Password, string Email)
         {
             //Register the appuser
             RegisterUser newUser = new RegisterUser()
             {
                 UserName = Username,
-                Password = Password
+                Password = Password,
+                Email = Email
             };
 
             var user = await service.Register(newUser, this.ModelState);
-
 
             return Redirect("/Home/Login");
         }

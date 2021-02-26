@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InterGalacticEcomm.Migrations
 {
     [DbContext(typeof(GalacticDbContext))]
-    [Migration("20210225002714_init")]
+    [Migration("20210225225524_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -23,4 +23,9 @@
 
 <h1>Your total is: @Model.TotalPrice</h1>
 
-<button>Buy your shit</button>
+<form method="post">
+    <div>
+        <p>Your total is: @Model.TotalPrice</p>
+        <input type="submit" value="submit" />
+    </div>
+</form>

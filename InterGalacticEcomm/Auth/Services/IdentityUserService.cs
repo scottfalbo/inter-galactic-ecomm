@@ -49,6 +49,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 return new AppUserDTO
                 {
                     UserName = user.UserName,
+                    Email = user.Email,
                     Roles = new List<string>() { "Guest" },
                 };
             }
@@ -74,6 +75,7 @@ namespace InterGalacticEcomm.Models.Interface.Services
                 {
                     Id = user.Id,
                     UserName = user.UserName,
+                    Email = user.Email,
                     Roles = await UserManager.GetRolesAsync(user),
                 };
             }

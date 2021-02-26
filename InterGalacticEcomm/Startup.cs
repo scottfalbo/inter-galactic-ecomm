@@ -2,6 +2,10 @@ using InterGalacticEcomm.Data;
 using InterGalacticEcomm.Models;
 using InterGalacticEcomm.Models.Interface;
 using InterGalacticEcomm.Models.Interface.Services;
+using InterGalacticEcomm.Models.Interface.Services.Authorize;
+using InterGalacticEcomm.Models.Interface.Services.Authorize.Interfaces;
+using InterGalacticEcomm.Models.Interface.Services.Email;
+using InterGalacticEcomm.Models.Interface.Services.Email.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,7 +51,7 @@ namespace InterGalacticEcomm
 
             services.AddIdentity<AppUser, IdentityRole>(options =>
             {
-                options.User.RequireUniqueEmail = false;
+                options.User.RequireUniqueEmail = true;
             })
             .AddEntityFrameworkStores<GalacticDbContext>();
 
@@ -65,9 +69,14 @@ namespace InterGalacticEcomm
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
+            services.AddScoped<IEmail, SendGridEmail>();
+
             services.AddTransient<IUserService, IdentityUserService>();
             services.AddTransient<IAdmin, AdminRepository>();
             services.AddTransient<IUploadService, UploadService>();
+            services.AddTransient<IAuthorize, AuthorizeService>();
+            
+
 
             services.AddMvc().AddRazorPagesOptions(options =>
             {
