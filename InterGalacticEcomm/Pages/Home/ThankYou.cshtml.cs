@@ -11,6 +11,7 @@ namespace InterGalacticEcomm.Pages.Home
     {
         public void OnGet()
         {
+
         }
     }
 }

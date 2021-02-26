@@ -21,11 +21,29 @@
     }
 </ul>
 
-<h1>Your total is: @Model.TotalPrice</h1>
-
 <form method="post">
     <div>
+        <label asp-for="@Model.CreditCard.CreditCardNum">CreditCard Number: </label>
+        <input type="text" value="4111111111111111" />
+    </div>
+    <div>
+        <label asp-for="@Model.CreditCard.Expiration">Expiration Date: </label>
+        <input type="text" value="0718" />
+    </div>
+    <div>
+        <label asp-for="@Model.CreditCard.Address">Address: </label>
+        <input type="text" />
+    </div>
+    <div>
+        <label asp-for="@Model.CreditCard.State">State: </label>
+        <input type="text" />
+    </div>
+    <div>
+        <label asp-for="@Model.TotalPrice">State: </label>
+        <input type="hidden" asp-for="@Model.TotalPrice"/>
+    </div>
+    <div>
         <p>Your total is: @Model.TotalPrice</p>
-        <input type="submit" value="submit" />
+        <input type="submit" value="Purchase Order" />
     </div>
 </form>

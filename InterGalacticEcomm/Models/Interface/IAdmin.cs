@@ -27,5 +27,7 @@ namespace InterGalacticEcomm.Models.Interface
 
         public Task CreateOrder(Cart cart);
         public Task<Order> GetOrder(string Id);
+
+        public Task EmptyCart(Cart cart);
     }
 }

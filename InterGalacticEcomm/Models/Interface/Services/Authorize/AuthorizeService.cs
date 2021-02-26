@@ -12,12 +12,12 @@ namespace InterGalacticEcomm.Models.Interface.Services.Authorize
 {
     public class AuthorizeService : IAuthorize
     {
-        public bool AuthorizeCard(CreditCard creditCard)
+        public bool AuthorizeCard(CreditCard creditCard, decimal totalPrice)
         {
-			bool result = Run("8kdY2X7Z", "65xdb76Z5qB93LYE", creditCard);
+			bool result = Run("8kdY2X7Z", "65xdb76Z5qB93LYE", creditCard, totalPrice);
             return result;
         }
-		public static bool Run(string ApiLoginID, string ApiTransactionKey, CreditCard userCard)
+		public static bool Run(string ApiLoginID, string ApiTransactionKey, CreditCard userCard, decimal totalPrice)
 		{
 
 			ApiOperationBase<ANetApiRequest, ANetApiResponse>.RunEnvironment = AuthorizeNet.Environment.SANDBOX;
@@ -33,8 +33,11 @@ namespace InterGalacticEcomm.Models.Interface.Services.Authorize
 		
 			var creditCard = new creditCardType
 			{
-				cardNumber = "4111111111111111",
-				expirationDate = "0718"
+				//cardNumber = "4111111111111111",
+				//expirationDate = "0718"
+				cardNumber = userCard.CreditCardNum,
+				expirationDate = userCard.Expiration,
+				//cardCode = userCard.CVV
 			};
 
 			//standard api call to retrieve response
@@ -43,7 +46,7 @@ namespace InterGalacticEcomm.Models.Interface.Services.Authorize
 			var transactionRequest = new transactionRequestType
 			{
 				transactionType = transactionTypeEnum.authCaptureTransaction.ToString(),   // charge the card
-				amount = 133.45m,
+				amount = totalPrice,
 				payment = paymentType
 			};
 

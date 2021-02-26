@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using InterGalacticEcomm.Models;
 using InterGalacticEcomm.Models.Interface;
@@ -35,8 +36,10 @@ namespace InterGalacticEcomm.Pages.Home
         public bool Recieved { get; set; }
         public bool Paid { get; set; }
         [Column(TypeName = "decimal(6,2)")]
+        [BindProperty]
         public decimal TotalPrice { get; set; }
-
+        [BindProperty]
+        public CreditCard CreditCard { get; set; }
         public async Task OnGet()
         {
             string id = HttpContext.Request.Cookies["user id"];
@@ -56,23 +59,40 @@ namespace InterGalacticEcomm.Pages.Home
 
         }
 
-        //public string status {get; set;}
-
-
         public async Task<IActionResult> OnPost()
         {
-            // autrhorize card
-            //if good send email
-            if (_authorizeService.AuthorizeCard(new CreditCard()))    
+            CreditCard card = new CreditCard()
+            {
+                CreditCardNum = "4111111111111111",
+                //CVV = CreditCard.CVV,
+                Address = CreditCard.Address,
+                Expiration = "0718",
+                State = CreditCard.State
+            };
+
+            if (_authorizeService.AuthorizeCard(card, TotalPrice))    
             {
                 string email = HttpContext.Request.Cookies["user email"];
                 string userName = HttpContext.Request.Cookies["user name"];
+
+                string id = HttpContext.Request.Cookies["user id"];
+                var order = await _context.GetOrder(id);
+
+                StringBuilder builder = new StringBuilder();
+
+                foreach (var item in order.Cart.CartProducts)
+                {
+                    builder.Append(item.Product.Name);
+                }
 
                 Message newMessage = new Message()
                 {
                     To = email,
                     Subject = $"Thank you for your InterGalactic order {userName}!!!",
-                    Body = "hello world"
+                    Body = $"Thank you for your purchase. Here is your order details: " +
+                    $"OrderTotal: {TotalPrice}," +
+                    $"Products:  {builder} "
+
                 };
                 Message adminMessage = new Message()
                 {
@@ -83,18 +103,22 @@ namespace InterGalacticEcomm.Pages.Home
                 Message whMessage = new Message()
                 {
                     To = "arcanumseattle@gmail.com",
-                    Subject = $"{userName} placed an order",
-                    Body = "go ship the stuff"
+                    Subject = $"Thank you for your InterGalactic order {userName}!!!",
+                    Body = $"Thank you for your purchase. Here is your order details: " +
+                    $"OrderTotal: {TotalPrice}, " +
+                    $"Products:  {builder} "
                 };
 
                 await _emailService.SendEmailAsync(newMessage);
                 await _emailService.SendEmailAsync(adminMessage);
                 await _emailService.SendEmailAsync(whMessage);
 
+                await _context.EmptyCart(order.Cart);
+
+
                 return Redirect("/Home/ThankYou");
             }
             return Redirect("/Home/Error");
         }
-
     }
 }
