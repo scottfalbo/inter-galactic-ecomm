@@ -3,4 +3,20 @@
 @{
 }
 
-<h1>Thank you for being a friend</h1>
+<h1>Thank you for being a friend, @Model.Username</h1>
+<div>
+    <p>Your order summary:</p>
+    <ul>
+        <li>
+            <p>@Model.TotalPrice</p>
+        </li>
+        @foreach (var item in Model.cartProducts)
+        {
+            <li>
+                <p>@item.Product.Name</p>
+                <p>@item.Product.Description</p>
+                <p>@item.Product.Price</p>
+            </li>
+        }
+    </ul>
+</div>

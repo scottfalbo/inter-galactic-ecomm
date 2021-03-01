@@ -18,17 +18,20 @@
         <li>
             <p>@item.Product.Price</p>
         </li>
+                <li>
+            <p>@item.Product.CartProducts.Quantity</p>
+        </li>
     }
 </ul>
 
 <form method="post">
     <div>
         <label asp-for="@Model.CreditCard.CreditCardNum">CreditCard Number: </label>
-        <input type="text" value="4111111111111111" />
+        <input  readonly type="text" value="4111111111111111" />
     </div>
     <div>
         <label asp-for="@Model.CreditCard.Expiration">Expiration Date: </label>
-        <input type="text" value="0718" />
+        <input readonly type="text" value="0718" />
     </div>
     <div>
         <label asp-for="@Model.CreditCard.Address">Address: </label>

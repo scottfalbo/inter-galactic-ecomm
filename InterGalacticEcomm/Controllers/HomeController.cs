@@ -1,4 +1,5 @@
 ﻿using InterGalacticEcomm.Models;
+using InterGalacticEcomm.Models.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,15 @@ namespace InterGalacticEcomm.Controllers
 {
     public class HomeController : Controller
     {
-
-        public IActionResult Index()
+        private readonly IAdmin _context;
+        public HomeController(IAdmin context)
         {
-            return View();
+            _context = context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            List<Order> orders = await _context.GetOrders();
+            return View(orders);
         }
     }
 }
