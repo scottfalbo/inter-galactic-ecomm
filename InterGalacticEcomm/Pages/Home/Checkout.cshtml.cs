@@ -113,9 +113,6 @@ namespace InterGalacticEcomm.Pages.Home
                 await _emailService.SendEmailAsync(adminMessage);
                 await _emailService.SendEmailAsync(whMessage);
 
-                await _context.EmptyCart(order.Cart);
-
-
                 return Redirect("/Home/ThankYou");
             }
             return Redirect("/Home/Error");

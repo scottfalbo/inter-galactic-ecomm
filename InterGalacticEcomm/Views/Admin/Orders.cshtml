@@ -1,0 +1,10 @@
+﻿@model InterGalacticEcomm.Models.Order
+
+<h1>Here is a list of all of our orders: </h1>
+
+
+@foreach (var item in Model.Cart.CartProducts)
+{
+    <p>@item.Product.Name</p>
+    <p>@item.Product.Price</p>
+}

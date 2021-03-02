@@ -25,6 +25,8 @@ namespace InterGalacticEcomm.Pages.Home
         public decimal Price { get; set; }
         public string Description { get; set; }
         public string URL { get; set; }
+        [BindProperty]
+        public int Quantity { get; set; }
         public async Task OnGet(int id)
         {
             Id = id;
@@ -33,6 +35,7 @@ namespace InterGalacticEcomm.Pages.Home
             Price = product.Price;
             URL = product.URL;
             Description = product.Description;
+            Quantity = product.Quantity;
         }
 
         public async Task<IActionResult> OnPostAsync(int Id)
@@ -40,7 +43,7 @@ namespace InterGalacticEcomm.Pages.Home
             //var user = User.Claims.First(x => x.Type == "Id").Value;
             string id = HttpContext.Request.Cookies["user id"];
             var cart = await _context.GetCart(id);
-            await _context.AddProductToCart(cart.Id, Id);
+            await _context.AddProductToCart(cart.Id, Id, Quantity);
 
             return Redirect("/Home/ShoppingCart");
         }

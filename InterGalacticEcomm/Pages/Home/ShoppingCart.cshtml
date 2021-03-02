@@ -1,26 +1,56 @@
 ﻿@page
 @model InterGalacticEcomm.Pages.Home.ShoppingCartModel
-@{
-}
+@{ }
 
 <h1>Shopping Cart</h1>
-<h2>@Model.UserName</h2>
 
-@foreach (var item in @Model.CartProducts)
+<h2>@Model.UserName</h2>
+<hr />
+@if (@Model.CartProducts.Count < 0)
 {
-<form asp-page-handler="delete" asp-route-Id="@item.ProductId" method="post" >
-    <div>
-        <a asp-page="/Home/Product" asp-route-Id="@item.ProductId">@item.Product.Name</a>
-        <input type="hidden" asp-for="@Model.ProductId" value="@item.ProductId"/>
-        <input type="submit" value="Remove"/>
-    </div>
-</form>
+    <h3>Oops....Looks like your cart is empty!</h3>
 }
+
 
 @if (@Model.CartProducts.Count > 0)
 {
-    <form method="post">
-        <input asp-for="@Model.Id" type="hidden" />
-        <input type="submit" value="Check out"/>
-    </form>
+<form method="post">
+    <input asp-for="@Model.Id" type="hidden" />
+    <input type="submit" value="Check out" />
+</form>
 }
+<hr />
+
+<div class="row">
+@foreach (var item in Model.CartProducts)
+{
+    <div class="col-md-6">
+            <div class="col-sm-6">
+                <div class="thumbnail">
+                    <div class="caption text-center">
+                        <div class="position-relative">
+                            <img src="@item.Product.URL" style="width:72px;height:72px;" />
+                        </div>
+                        <h4 id="thumbnail-label"><a asp-page="/Home/Product" asp-route-Id="@item.ProductId">@item.Product.Name</a></h4>
+                        <div class="thumbnail-description smaller">@item.Product.Description</div>
+                    </div>
+                    <div class="caption card-footer text-center">
+                        <ul class="list-inline">
+                            <li>
+                                @item.Product.Price
+                            </li>
+                            <form asp-page-handler="delete" asp-route-Id="@item.ProductId" method="post">
+                                <div>
+                                    <p>@item.Product.CartProducts.Quantity</p>
+                                    <input type="hidden" asp-for="@Model.ProductId" value="@item.ProductId" />
+                                    <input type="submit" value="Remove" />
+                                </div>
+                            </form>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        <div class="col-md-2">&nbsp;</div>
+    </div>
+}
+</div>

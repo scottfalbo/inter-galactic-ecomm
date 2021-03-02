@@ -4,13 +4,13 @@
 }
 
 
-<h1>Here is your product details for : @Model.Name</h1>
+<h1>@Model.Name</h1>
 <ul>
     <li>
-        @Model.Price
+        Price: @Model.Price
     </li>
     <li>
-        @Model.Description
+        Description: @Model.Description
     </li>
 </ul>
 
@@ -19,10 +19,13 @@
     <img src="@Model.URL" width="250">
 }
 
+<hr />
+
 @if (User.Identity.IsAuthenticated)
 {
     <form method="post">
         <input asp-for="@Model.Id" type="hidden" />
+        <input asp-for="@Model.Quantity" type="hidden" />
         <input type="submit" value="add to cart" />
     </form>
 }

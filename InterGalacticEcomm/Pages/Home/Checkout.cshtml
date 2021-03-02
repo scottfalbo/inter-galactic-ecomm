@@ -6,29 +6,40 @@
 
 <h1>Checkout page</h1>
 
-<ul>
+<div class="row">
     @foreach (var item in Model.Cart.CartProducts)
     {
-        <li>
-            <p>@item.Product.Name</p>
-        </li>
-        <li>
-            <p>@item.Product.Description</p>
-        </li>
-        <li>
-            <p>@item.Product.Price</p>
-        </li>
-    }
-</ul>
+<div class="col-md-6">
+    <div class="col-sm-6">
+        <div class="thumbnail">
+            <div class="caption text-center">
+                <div class="position-relative">
+                    <img src="@item.Product.URL" style="width:72px;height:72px;" />
+                </div>
+                <h4 id="thumbnail-label"><a asp-page="/Home/Product" asp-route-Id="@item.ProductId">@item.Product.Name</a></h4>
+                <div class="thumbnail-description smaller">@item.Product.Description</div>
+            </div>
+            <div class="caption card-footer text-center">
+                <ul class="list-inline">
+                    <li>
+                        @item.Product.Price
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">&nbsp;</div>
+</div>}
+</div>
 
 <form method="post">
     <div>
         <label asp-for="@Model.CreditCard.CreditCardNum">CreditCard Number: </label>
-        <input type="text" value="4111111111111111" />
+        <input  readonly type="text" value="4111111111111111" />
     </div>
     <div>
         <label asp-for="@Model.CreditCard.Expiration">Expiration Date: </label>
-        <input type="text" value="0718" />
+        <input readonly type="text" value="0718" />
     </div>
     <div>
         <label asp-for="@Model.CreditCard.Address">Address: </label>
@@ -43,7 +54,7 @@
         <input type="hidden" asp-for="@Model.TotalPrice"/>
     </div>
     <div>
-        <p>Your total is: @Model.TotalPrice</p>
+        <p style="font-weight:bold;">Your total is: @Model.TotalPrice</p>
         <input type="submit" value="Purchase Order" />
     </div>
 </form>

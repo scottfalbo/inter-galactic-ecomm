@@ -27,22 +27,20 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a asp-area="" asp-page="/home/Index" class="navbar-brand">Home</a> 
+                <a asp-area="" asp-page="/home/Index" class="navbar-brand">Home</a>
 
                 <ul class="nav navbar-nav navbar-right" style="margin-left:900px">
                     @if (!User.Identity.IsAuthenticated)
                     {
-                        <a asp-area="" asp-page="/home/login" class="navbar-brand">login</a>
-                        <a asp-area="" asp-page="/home/register" class="navbar-brand">register</a>
-                    }
+        <a asp-area="" asp-page="/home/login" class="navbar-brand">login</a>
+                        <a asp-area="" asp-page="/home/register" class="navbar-brand">register</a>}
 
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-area="" asp-page="/Home/Logout" class="navbar-brand">Logout</a>
+        <a asp-area="" asp-page="/Home/Logout" class="navbar-brand">Logout</a>
                         @await Component.InvokeAsync("ShoppingCart")
-                        <a asp-area="" asp-page="/home/shoppingcart" class="navbar-brand">Cart</a>
-                    }
+                                        <a asp-area="" asp-page="/home/shoppingcart" class="navbar-brand">Cart</a>}
                 </ul>
 
 
@@ -51,10 +49,13 @@
             </div>
         </div>
     </nav>
+
+
     <div class="container body-content" style="margin-top:55px;">
         @RenderBody()
+
         <hr />
-        <footer style="position:absolute; height:2.5rem;bottom:0;text-align:center">
+        <footer style="position:sticky; height:2.5rem;bottom:0;text-align:center">
             <p>&copy; 2019 - Scott + Matthew</p>
         </footer>
     </div>

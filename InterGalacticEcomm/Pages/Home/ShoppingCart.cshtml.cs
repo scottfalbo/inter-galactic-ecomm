@@ -22,6 +22,8 @@ namespace InterGalacticEcomm.Pages.Home
         public int Id { get; set; }
         [BindProperty]
         public int ProductId { get; set; }
+        [BindProperty]
+        public int productQuantity { get; set; }
         public async Task OnGet()
         {
             string user = HttpContext.Request.Cookies["user name"];
