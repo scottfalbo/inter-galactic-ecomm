@@ -1,15 +1,31 @@
 ﻿@page
 @model InterGalacticEcomm.Pages.Home.CategoryModel
-@{
-}
+@{ }
 
-<h1>Here is a list of Products in that @Model.CategoryName</h1>
+<h1>Here is a list of Products in: @Model.CategoryName</h1>
 
-<ul>
+<div class="container">
+    <div class="row">
     @foreach (var item in Model.CategoryProductList)
     {
-        <li>
-            <a asp-page="/Home/Product" asp-route-Id="@item.ProductId">@item.Product.Name</a>
-        </li>
+        <div class="col-md-6">
+            <div class="col-sm-6">
+                <div class="thumbnail">
+                    <div class="caption text-center">
+                        <div class="position-relative">
+                            <img src="@item.Product.URL" style="width:72px;height:72px;" />
+                        </div>
+                        <h4 id="thumbnail-label"><a asp-page="/Home/Product" asp-route-Id="@item.ProductId">@item.Product.Name</a></h4>
+                        <div class="thumbnail-description smaller">@item.Product.Description</div>
+                    </div>
+                    <div class="caption card-footer text-center">
+                        <ul class="list-inline">
+                            <li>@item.Product.Price</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
-</ul>
+    </div>
+</div>

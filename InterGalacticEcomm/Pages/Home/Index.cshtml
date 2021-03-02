@@ -4,28 +4,34 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <h1 style="text-align:center">Welcome to InterGalactic E-comm, @Model.Username</h1>
-}
+<h1 style="text-align:center">Welcome to InterGalactic E-comm, @Model.Username</h1> }
 else
 {
-    <h1 style="text-align:center">Welcome to InterGalactic E-comm!</h1>
-}
+<h1 style="text-align:center">Welcome to InterGalactic E-comm!</h1>}
 
-<p>Here is a list of our current Product Categories</p>
-<ul>
-    @*
-        Each categroy can be put in a card/div to display neatly. See (MyGrdn). Check what version of bootstrap this is.
-    *@
+<div class="container">
+    <div class="row">
     @foreach (var item in Model.CategoryList)
     {
-<li>
-    <a asp-page="/Home/Category" asp-route-Id="@item.Id">@item.CategoryName</a>
-</li>}
-
-</ul>
-
+        <div class="col-md-6">
+                <div class="col-sm-6">
+                    <div class="thumbnail">
+                        <div class="caption text-center">
+                            <div class="position-relative">
+                                <img src="../wwwroot/images/interdimension.PNG" style="width:72px;height:72px;" />
+                            </div>
+                            <h4 id="thumbnail-label"><a asp-page="/Home/Category" asp-route-Id="@item.Id">@item.CategoryName</a></h4>
+                            <div class="thumbnail-description smaller">@item.Description</div>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-2">&nbsp;</div>
+        </div>
+    }
+    </div>
+</div>
 
 @if (User.IsInRole("Admin"))
 {
 <p style="font-weight:bold;">Administrator permissions:</p>
-                <a href="/admin/index">Admin Panel</a>}
+                    <a href="/admin/index">Admin Panel</a>}
