@@ -10,7 +10,7 @@ Scott Falbo | Matthew Petersen
 
 ## Overview:
 
-https://intergalacticecomm.azurewebsites.net
++ no longer deployed
 
 We are in the process of creating an E-commerce website, selling Rick and Morty memorabilia. Our store is currently comprised of Products, ProductCategories, and Categories.
 Products are tied to Categories by ProductCategories, which is a join table. This means that you can click on a category, and see all the products that belong to it!
